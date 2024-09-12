@@ -2,6 +2,7 @@ import { Button } from "../ui/button";
 import { PlusIcon } from "lucide-react";
 
 import Region from "../Region";
+import AddButton from "../add-agent/AddButton";
 
 export default function Filter() {
   return (
@@ -15,10 +16,7 @@ export default function Filter() {
           <PlusIcon className="h-4 w-4 text-[#FFFFFF] mr-1" />
           ლისტინგის დამატება
         </Button>
-        <Button variant="secondary" className="flex  group">
-          <PlusIcon className="h-4 w-4 text-[#F93B1D] mr-1 group-hover:text-[#FFFFFF]" />
-          აგენტის დამატება
-        </Button>
+        <AddButton />
       </div>
     </div>
   );
