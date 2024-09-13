@@ -1,8 +1,13 @@
 import Image from "next/image";
 import hotel from "../../public/images/hotel.png";
+import pin from "../../public/icons/pin.svg";
+import bed from "../../public/icons/bed.svg";
+import area from "../../public/icons/area.svg";
+import zip from "../../public/icons/zip.svg";
+
 export default function PropertyCard() {
   return (
-    <div className=" rounded-md w-[384px] h-[307px]">
+    <div className=" rounded-md ">
       <div className="relative">
         <Image src={hotel} alt="hotel" />
         <span className="absolute top-6 left-4 text-white px-5 py-1 bg-[#39626f] rounded-2xl text-sm">
@@ -12,11 +17,22 @@ export default function PropertyCard() {
 
       <div className="text-[#021526B2] p-5 border rounded-lg">
         <h2 className="text-[#021526] text-2xl font-semibold">80 000 ლ</h2>
-        <p>თბილისი, ი.ჭავჭავაძის 53</p>
-        <div>
-          <span>bed 2</span>
-          <span>55მ</span>
-          <span>0160</span>
+        <div className="flex gap-2 mt-1">
+          <Image src={pin} alt="pin" />
+          თბილისი, ი.ჭავჭავაძის 53
+        </div>
+        <div className="flex gap-7 mt-4">
+          <div className="flex gap-1 items-center">
+            <Image src={bed} alt="bed" />2
+          </div>
+          <div className="flex gap-1 items-center">
+            <Image src={area} alt="area" />
+            55მ
+          </div>
+          <div className="flex gap-1 items-center">
+            <Image src={zip} alt="zip" />
+            0160
+          </div>
         </div>
       </div>
     </div>

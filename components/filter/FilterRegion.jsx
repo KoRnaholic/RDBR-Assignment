@@ -6,9 +6,14 @@ import { useEffect, useRef, useState } from "react";
 export default function FilterRegion() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const someRef = useRef(null);
 
   const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target) &&
+      !someRef.current.contains(event.target)
+    ) {
       setIsOpen(false);
     }
   };
@@ -20,8 +25,9 @@ export default function FilterRegion() {
     };
   }, []);
 
-  const toggleDropdown = (event) => {
-    event.stopPropagation();
+  const toggleDropdown = (e) => {
+    // e.stopPropagation();
+
     setIsOpen(!isOpen);
   };
   const options = [
@@ -43,6 +49,7 @@ export default function FilterRegion() {
     <>
       <div
         onClick={toggleDropdown}
+        ref={someRef}
         className={`${
           isOpen ? "bg-[#F3F3F3]" : ""
         } inline-flex cursor-pointer px-3 py-2 font-semibold rounded-lg hover:bg-[#F3F3F3] text-black`}
@@ -58,7 +65,7 @@ export default function FilterRegion() {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute mt-14  border rounded-xl inline-flex flex-col p-5 gap-4 pr-10 shadow-md"
+          className="absolute mt-14 bg-white z-10 border rounded-xl inline-flex flex-col p-5 gap-4 pr-10 shadow-md"
         >
           <h3 className="text-[#021526] font-semibold">რეგიონის მიხედვით</h3>
 

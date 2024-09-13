@@ -42,7 +42,7 @@ export default function FilterBy({ name, label, categories }) {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute mt-4 border rounded-xl pl-6 pr-8 py-6 shadow-md text-black"
+          className="absolute mt-4 border bg-white z-10 rounded-xl pl-6 pr-8 py-6 shadow-md text-black"
         >
           <h3 className="text-[#021526] font-semibold">{name}</h3>
           <div className="mt-5 relative flex gap-3">

@@ -16,18 +16,6 @@ import UploadImage from "./UploadImage";
 
 export default function AddButton() {
   const [inputNameValue, setInputNameValue] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedImage(URL.createObjectURL(file)); // Generate a URL for the uploaded image
-    }
-  };
-
-  const handleRemoveImage = () => {
-    setSelectedImage(null); // Reset the selectedImage state to null
-  };
 
   const handleInputChange = (e) => {
     setInputNameValue(e.target.value);
@@ -112,6 +100,7 @@ export default function AddButton() {
 
           {/* Image upload */}
           <UploadImage />
+
           <DialogFooter className="mt-14">
             <DialogClose asChild>
               <Button variant="secondary" type="close">

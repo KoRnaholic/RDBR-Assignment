@@ -6,7 +6,7 @@ import AddButton from "../add-agent/AddButton";
 
 export default function Filter() {
   return (
-    <div className="flex justify-between items-center">
+    <div className=" flex justify-between items-center">
       <div>
         <Region />
       </div>
@@ -16,6 +16,8 @@ export default function Filter() {
           <PlusIcon className="h-4 w-4 text-[#FFFFFF] mr-1" />
           ლისტინგის დამატება
         </Button>
+
+        {/* adding agent */}
         <AddButton />
       </div>
     </div>
