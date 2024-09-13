@@ -31,7 +31,12 @@ export default function FilterBy({ name, label, categories }) {
         onClick={toggleDropdown}
         className="inline-flex  cursor-pointer px-3 py-2 rounded-lg font-semibold hover:bg-[#F3F3F3] text-black"
       >
-        {label} <ChevronDown className=" ml-1 h-4- w-4" />
+        {label}{" "}
+        <ChevronDown
+          className={`${
+            isOpen ? "rotate-180" : ""
+          } ml-1 h-4- w-4 transition-all`}
+        />
       </div>
 
       {isOpen && (

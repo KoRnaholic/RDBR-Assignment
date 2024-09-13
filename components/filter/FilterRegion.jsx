@@ -47,7 +47,12 @@ export default function FilterRegion() {
           isOpen ? "bg-[#F3F3F3]" : ""
         } inline-flex cursor-pointer px-3 py-2 font-semibold rounded-lg hover:bg-[#F3F3F3] text-black`}
       >
-        რეგიონი <ChevronDown className=" ml-1 h-4- w-4" />
+        რეგიონი{" "}
+        <ChevronDown
+          className={`${
+            isOpen ? "rotate-180" : ""
+          } ml-1 h-4- w-4 transition-all`}
+        />
       </div>
 
       {isOpen && (
