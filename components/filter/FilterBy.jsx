@@ -6,9 +6,14 @@ import { useEffect, useRef, useState } from "react";
 export default function FilterBy({ name, label, categories }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const priceRef = useRef(null);
 
   const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target) &&
+      !priceRef.current.contains(event.target)
+    ) {
       setIsOpen(false);
     }
   };
@@ -29,6 +34,7 @@ export default function FilterBy({ name, label, categories }) {
     <div className="relative">
       <div
         onClick={toggleDropdown}
+        ref={priceRef}
         className="inline-flex  cursor-pointer px-3 py-2 rounded-lg font-semibold hover:bg-[#F3F3F3] text-black"
       >
         {label}{" "}

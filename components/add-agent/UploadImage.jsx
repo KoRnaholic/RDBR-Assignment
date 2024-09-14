@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
+import Image from "next/image";
 
 export default function UploadImage() {
   const [selectedImage, setSelectedImage] = useState(null);
+  console.log(selectedImage);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -35,10 +37,12 @@ export default function UploadImage() {
       >
         {selectedImage ? (
           <div className="relative">
-            <img
+            <Image
               src={selectedImage}
               alt="Uploaded Preview"
               className="object-cover w-24 h-20 rounded-md"
+              width={100}
+              height={100}
             />
             <Trash2
               onClick={handleRemoveImage}
@@ -54,6 +58,7 @@ export default function UploadImage() {
           className="hidden"
           onChange={handleFileChange}
           disabled={disabled}
+          name="image"
         />
       </label>
     </div>

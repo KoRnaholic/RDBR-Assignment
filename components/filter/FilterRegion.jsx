@@ -6,13 +6,13 @@ import { useEffect, useRef, useState } from "react";
 export default function FilterRegion() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const someRef = useRef(null);
+  const regionRef = useRef(null);
 
   const handleClickOutside = (event) => {
     if (
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target) &&
-      !someRef.current.contains(event.target)
+      !regionRef.current.contains(event.target)
     ) {
       setIsOpen(false);
     }
@@ -49,7 +49,7 @@ export default function FilterRegion() {
     <>
       <div
         onClick={toggleDropdown}
-        ref={someRef}
+        ref={regionRef}
         className={`${
           isOpen ? "bg-[#F3F3F3]" : ""
         } inline-flex cursor-pointer px-3 py-2 font-semibold rounded-lg hover:bg-[#F3F3F3] text-black`}

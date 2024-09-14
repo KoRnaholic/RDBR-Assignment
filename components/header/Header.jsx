@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <>
       <header className="px-36 py-10">
-        <Image src={logo} />
+        <Image src={logo} alt="logo" />
       </header>
       <hr />
     </>
