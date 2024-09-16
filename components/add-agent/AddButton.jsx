@@ -13,12 +13,73 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import UploadImage from "./UploadImage";
+import Image from "next/image";
 
 export default function AddButton() {
   const [inputNameValue, setInputNameValue] = useState("");
   const [inputSurnameValue, setInputSurnameValue] = useState("");
   const [inputEmailValue, setInputEmailValue] = useState("");
   const [inputPhoneValue, setInputPhoneValue] = useState("");
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  console.log(selectedImage);
+
+  const disabled = selectedImage === null ? false : true;
+
+  const handleRemoveImage = (e) => {
+    e.preventDefault(); // Prevent default behavior of label
+    e.stopPropagation(); // Stop event from bubbling up
+    setSelectedImage(null); // Reset the selectedImage state to null
+  };
+
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   // setSelectedImage(e.target.files[0]);
+  //   if (file) {
+  //     setSelectedImage(URL.createObjectURL(file)); // Generate a URL for the uploaded image
+  //   }
+  // };
+
+  const handleFileChange = (e) => {
+    setSelectedImage(e.target.files[0]); // Store selected file
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Create FormData object to hold form fields and file
+    const formData = new FormData();
+    formData.append("name", inputNameValue);
+    formData.append("surname", inputSurnameValue);
+    formData.append("email", inputEmailValue);
+    formData.append("phone", inputPhoneValue);
+    formData.append("avatar", selectedImage); // Add file to formData
+
+    try {
+      const response = await fetch(
+        "https://api.real-estate-manager.redberryinternship.ge/api/agents",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`, // Ensure token is correct
+          },
+        }
+      );
+
+      // Check if response is JSON or an error page
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const result = await response.json();
+        console.log("Result:", result);
+      } else {
+        const text = await response.text();
+        console.error("Received non-JSON response:", text);
+      }
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
+  };
 
   const handleNameChange = (e) => setInputNameValue(e.target.value);
   const handleSurnameChange = (e) => setInputSurnameValue(e.target.value);
@@ -42,8 +103,9 @@ export default function AddButton() {
           </DialogHeader>
 
           <form
-            action="/api/create-agent"
-            method="post"
+            // action="api/create-agent"
+            // method="post"
+            onSubmit={handleSubmit}
             className="mt-10 grid grid-cols-2 gap-10"
           >
             {/* Left Column */}
@@ -118,10 +180,50 @@ export default function AddButton() {
             <Button variant="primary" type="submit">
               დაამატე აგენტი
             </Button>
+
+            <div className="mt-2 flex justify-center items-start flex-col gap-2 w-full">
+              <label className="text-[#021526] font-semibold text-sm">
+                ატვირთეთ ფოტო *
+              </label>
+              <label
+                htmlFor="file-upload" // In React, use "htmlFor"
+                className={`${
+                  disabled ? "cursor-default" : "cursor-pointer"
+                } border-2 border-gray-400  border-dashed w-full rounded-md
+     text-gray-700  px-24 h-[120px]
+      relative flex justify-center items-center`}
+              >
+                {selectedImage ? (
+                  <div className="relative">
+                    <Image
+                      src={URL.createObjectURL(selectedImage)}
+                      alt="Uploaded Preview"
+                      className="object-cover w-24 h-20 rounded-md"
+                      width={100}
+                      height={100}
+                    />
+                    <Trash2
+                      onClick={handleRemoveImage}
+                      className="absolute -bottom-2 -right-2 bg-white h-7 w-7 p-1 rounded-full border border-black cursor-pointer"
+                    />
+                  </div>
+                ) : (
+                  <Plus className="mx-auto border rounded-full p-1 border-black" />
+                )}
+                <input
+                  id="file-upload"
+                  type="file"
+                  className="hidden"
+                  onChange={handleFileChange}
+                  // disabled={disabled}
+                  name="image"
+                />
+              </label>
+            </div>
           </form>
 
           {/* Image upload */}
-          <UploadImage />
+          {/* <UploadImage /> */}
 
           <DialogFooter className="mt-14">
             <DialogClose asChild>

@@ -3,6 +3,7 @@ import { PlusIcon } from "lucide-react";
 
 import Region from "../Region";
 import AddButton from "../add-agent/AddButton";
+import Link from "next/link";
 
 export default function Filter() {
   return (
@@ -12,10 +13,12 @@ export default function Filter() {
       </div>
 
       <div className="flex gap-4">
-        <Button variant="primary" className="flex  ">
-          <PlusIcon className="h-4 w-4 text-[#FFFFFF] mr-1" />
-          ლისტინგის დამატება
-        </Button>
+        <Link href="/add-property">
+          <Button variant="primary" className="flex  ">
+            <PlusIcon className="h-4 w-4 text-[#FFFFFF] mr-1" />
+            ლისტინგის დამატება
+          </Button>
+        </Link>
 
         {/* adding agent */}
         <AddButton />
