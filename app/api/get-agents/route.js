@@ -8,7 +8,7 @@ export async function GET() {
       "https://api.real-estate-manager.redberryinternship.ge/api/agents",
       {
         headers: {
-          Authorization: `Bearer ${process.env.API_TOKEN}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
           "Content-Type": "application/json",
         },
       }

@@ -22,7 +22,6 @@ export default function AddButton() {
   const [inputPhoneValue, setInputPhoneValue] = useState("");
 
   const [selectedImage, setSelectedImage] = useState(null);
-  console.log(selectedImage);
 
   const disabled = selectedImage === null ? false : true;
 
@@ -106,82 +105,86 @@ export default function AddButton() {
             // action="api/create-agent"
             // method="post"
             onSubmit={handleSubmit}
-            className="mt-10 grid grid-cols-2 gap-10"
+            className="mt-10  gap-10"
           >
             {/* Left Column */}
-            <div className="text-sm">
-              {/* Name Input */}
-              <label className="block text-[#021526] font-semibold">
-                სახელი *
-                <input
-                  type="text"
-                  className="mt-1 block w-full border px-2 outline-none rounded-md shadow-sm py-2"
-                  value={inputNameValue}
-                  onChange={handleNameChange} // Controlled input for name
-                  name="name"
-                />
-                <span
-                  className={`flex items-center gap-1 mt-1 font-medium ${
-                    inputNameValue.length >= 2 ? "text-[#45A849]" : "text-black"
-                  }`}
-                >
-                  <Check className="w-4 h-4" /> მინიმუმ ორი სიმბოლო
-                </span>
-              </label>
+            <div className="grid grid-cols-2 gap-6">
+              <div className="text-sm">
+                {/* Name Input */}
+                <label className="block text-[#021526] font-semibold">
+                  სახელი *
+                  <input
+                    type="text"
+                    className="mt-1 block w-full border px-2 outline-none rounded-md shadow-sm py-2"
+                    value={inputNameValue}
+                    onChange={handleNameChange} // Controlled input for name
+                    name="name"
+                  />
+                  <span
+                    className={`flex items-center gap-1 mt-1 font-medium ${
+                      inputNameValue.length >= 2
+                        ? "text-[#45A849]"
+                        : "text-black"
+                    }`}
+                  >
+                    <Check className="w-4 h-4" /> მინიმუმ ორი სიმბოლო
+                  </span>
+                </label>
 
-              {/* Email Input */}
-              <label className="block mt-10 text-[#021526] font-semibold">
-                ელ-ფოსტა *
-                <input
-                  type="email"
-                  className="mt-1 block w-full outline-none px-2 rounded-md border py-2"
-                  value={inputEmailValue}
-                  onChange={handleEmailChange} // Controlled input for email
-                  name="email"
-                />
-                <span className="flex items-center gap-1 mt-1 font-medium">
-                  <Check className="w-4 h-4" /> გამოიყენეთ @redberry.ge ფოსტა
-                </span>
-              </label>
+                {/* Email Input */}
+                <label className="block mt-10 text-[#021526] font-semibold">
+                  ელ-ფოსტა *
+                  <input
+                    type="email"
+                    className="mt-1 block w-full outline-none px-2 rounded-md border py-2"
+                    value={inputEmailValue}
+                    onChange={handleEmailChange} // Controlled input for email
+                    name="email"
+                  />
+                  <span className="flex items-center gap-1 mt-1 font-medium">
+                    <Check className="w-4 h-4" /> გამოიყენეთ @redberry.ge ფოსტა
+                  </span>
+                </label>
+              </div>
+
+              {/* Right Column */}
+              <div className="text-sm">
+                {/* Surname Input */}
+                <label className="block text-[#021526] font-semibold">
+                  გვარი
+                  <input
+                    type="text"
+                    className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"
+                    value={inputSurnameValue}
+                    onChange={handleSurnameChange} // Controlled input for surname
+                    name="surname"
+                  />
+                  <span className="flex items-center gap-1 mt-1 font-medium">
+                    <Check className="w-4 h-4" /> მინიმუმ ორი სიმბოლო
+                  </span>
+                </label>
+
+                {/* Phone Input */}
+                <label className="block mt-10 text-[#021526] font-semibold">
+                  ტელეფონის ნომერი
+                  <input
+                    type="tel"
+                    className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"
+                    value={inputPhoneValue}
+                    onChange={handlePhoneChange} // Controlled input for phone
+                    name="phone"
+                  />
+                  <span className="flex items-center gap-1 mt-1 font-medium">
+                    <Check className="w-4 h-4" /> მხოლოდ რიცხვები
+                  </span>
+                </label>
+              </div>
             </div>
-
-            {/* Right Column */}
-            <div className="text-sm">
-              {/* Surname Input */}
-              <label className="block text-[#021526] font-semibold">
-                გვარი
-                <input
-                  type="text"
-                  className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"
-                  value={inputSurnameValue}
-                  onChange={handleSurnameChange} // Controlled input for surname
-                  name="surname"
-                />
-                <span className="flex items-center gap-1 mt-1 font-medium">
-                  <Check className="w-4 h-4" /> მინიმუმ ორი სიმბოლო
-                </span>
-              </label>
-
-              {/* Phone Input */}
-              <label className="block mt-10 text-[#021526] font-semibold">
-                ტელეფონის ნომერი
-                <input
-                  type="tel"
-                  className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"
-                  value={inputPhoneValue}
-                  onChange={handlePhoneChange} // Controlled input for phone
-                  name="phone"
-                />
-                <span className="flex items-center gap-1 mt-1 font-medium">
-                  <Check className="w-4 h-4" /> მხოლოდ რიცხვები
-                </span>
-              </label>
-            </div>
-            <Button variant="primary" type="submit">
+            {/* <Button variant="primary" type="submit">
               დაამატე აგენტი
-            </Button>
+            </Button> */}
 
-            <div className="mt-2 flex justify-center items-start flex-col gap-2 w-full">
+            <div className="mt-2  flex justify-center items-start flex-col gap-2 w-full">
               <label className="text-[#021526] font-semibold text-sm">
                 ატვირთეთ ფოტო *
               </label>
@@ -220,21 +223,20 @@ export default function AddButton() {
                 />
               </label>
             </div>
+            <DialogFooter className="mt-14">
+              <DialogClose asChild>
+                <Button variant="secondary" type="close">
+                  გაუქმება
+                </Button>
+              </DialogClose>
+              <Button variant="primary" type="submit">
+                დაამატე აგენტი
+              </Button>
+            </DialogFooter>
           </form>
 
           {/* Image upload */}
           {/* <UploadImage /> */}
-
-          <DialogFooter className="mt-14">
-            <DialogClose asChild>
-              <Button variant="secondary" type="close">
-                გაუქმება
-              </Button>
-            </DialogClose>
-            <Button variant="primary" type="submit">
-              დაამატე აგენტი
-            </Button>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>
