@@ -1,4 +1,5 @@
 "use client";
+import ChooseAgent from "@/components/add-agent/ChooseAgent";
 import { Check, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -7,6 +8,8 @@ export default function AddProperty() {
   const [inputSurnameValue, setInputSurnameValue] = useState("");
   const [inputEmailValue, setInputEmailValue] = useState("");
   const [inputPhoneValue, setInputPhoneValue] = useState("");
+
+  const [agents, setAgents] = useState(null);
 
   const [data, setData] = useState(null);
   // const [isLoading, setLoading] = useState(true)
@@ -18,6 +21,14 @@ export default function AddProperty() {
         setData(data);
         // setLoading(false)
         console.log(data);
+      });
+
+    fetch("http://localhost:3000//api/get-agents")
+      .then((res) => res.json())
+      .then((data) => {
+        setAgents(data.agents);
+        // setLoading(false)
+        console.log(data.agents);
       });
   }, []);
 
@@ -229,6 +240,7 @@ relative flex justify-center items-center`}
               name="image"
             />
           </label>
+          <ChooseAgent agents={agents} />
         </div>
       </form>
     </section>

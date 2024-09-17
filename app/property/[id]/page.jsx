@@ -7,6 +7,7 @@ import bed from "../../../public/icons/bed.svg";
 import area from "../../../public/icons/area.svg";
 import zip from "../../../public/icons/zip.svg";
 import PropertyDeleteModal from "@/components/property/PropertyDeleteModal";
+import PropertyCarousel from "@/components/property/PropertyCarousel";
 
 export default function PropertyPage(props) {
   return (
@@ -23,7 +24,7 @@ export default function PropertyPage(props) {
               alt="property"
               className="w-[839px] h-[670px]"
             />
-            <span className="absolute top-10 left-10 text-white px-5 py-1 bg-[#39626f] rounded-2xl text-xl">
+            <span className="absolute top-10 left-10 text-white px-6 py-2 bg-[#39626f] rounded-3xl text-xl leading-6">
               იყიდება
             </span>
             <p className="text-end">გამოქვეყნების თარიღი 08/08/24</p>
@@ -84,6 +85,8 @@ export default function PropertyPage(props) {
           <PropertyDeleteModal />
         </div>
       </section>
+
+      <PropertyCarousel />
     </div>
   );
 }

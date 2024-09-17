@@ -20,7 +20,7 @@ export default function PropertyDeleteModal() {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="bg-white max-w-[623px] py-12 pb-16">
+      <DialogContent className="bg-white max-w-[623px] py-12 pb-16 ">
         <DialogHeader>
           <DialogTitle className="mx-auto text-[#2D3648]  text-xl">
             გსურთ წაშალოთ ლისტინგი?

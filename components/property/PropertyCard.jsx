@@ -10,10 +10,10 @@ import { Check, Plus, PlusIcon, Trash2 } from "lucide-react";
 export default function PropertyCard() {
   return (
     <Link href="/property/123">
-      <div className=" rounded-md ">
+      <div className=" rounded-md hover:shadow-xl">
         <div className="relative">
           <Image src={hotel} alt="hotel" />
-          <span className="absolute top-6 left-4 text-white px-5 py-1 bg-[#39626f] rounded-2xl text-sm">
+          <span className="absolute top-6 left-6 text-white px-[18px] py-1.5 bg-[#39626f] rounded-2xl text-sm">
             იყიდება
           </span>
         </div>
