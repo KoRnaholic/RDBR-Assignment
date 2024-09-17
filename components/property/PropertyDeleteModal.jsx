@@ -1,3 +1,4 @@
+import { deleteProperty } from "@/app/actions/delete-property";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -8,8 +9,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { redirect } from "next/navigation";
 
-export default function PropertyDeleteModal() {
+export default function PropertyDeleteModal({ propertyId }) {
+  async function deleteProp() {
+    "use server";
+    deleteProperty(propertyId);
+    redirect("/");
+  }
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -33,9 +40,11 @@ export default function PropertyDeleteModal() {
               გაუქმება
             </Button>
           </DialogClose>
-          <Button variant="primary" type="submit">
-            დადასტურება
-          </Button>
+          <form action={deleteProp}>
+            <Button variant="primary" type="submit">
+              დადასტურება
+            </Button>
+          </form>
         </DialogFooter>
       </DialogContent>
     </Dialog>

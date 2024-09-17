@@ -22,25 +22,18 @@ export default function AddButton() {
   const [inputPhoneValue, setInputPhoneValue] = useState("");
 
   const [selectedImage, setSelectedImage] = useState(null);
+  console.log(selectedImage.size);
 
   const disabled = selectedImage === null ? false : true;
 
   const handleRemoveImage = (e) => {
-    e.preventDefault(); // Prevent default behavior of label
-    e.stopPropagation(); // Stop event from bubbling up
-    setSelectedImage(null); // Reset the selectedImage state to null
+    e.preventDefault();
+    e.stopPropagation();
+    setSelectedImage(null);
   };
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   // setSelectedImage(e.target.files[0]);
-  //   if (file) {
-  //     setSelectedImage(URL.createObjectURL(file)); // Generate a URL for the uploaded image
-  //   }
-  // };
-
   const handleFileChange = (e) => {
-    setSelectedImage(e.target.files[0]); // Store selected file
+    setSelectedImage(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
@@ -52,7 +45,7 @@ export default function AddButton() {
     formData.append("surname", inputSurnameValue);
     formData.append("email", inputEmailValue);
     formData.append("phone", inputPhoneValue);
-    formData.append("avatar", selectedImage); // Add file to formData
+    formData.append("avatar", selectedImage);
 
     try {
       const response = await fetch(
@@ -61,7 +54,7 @@ export default function AddButton() {
           method: "POST",
           body: formData,
           headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`, // Ensure token is correct
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
           },
         }
       );
@@ -101,12 +94,7 @@ export default function AddButton() {
             </DialogTitle>
           </DialogHeader>
 
-          <form
-            // action="api/create-agent"
-            // method="post"
-            onSubmit={handleSubmit}
-            className="mt-10  gap-10"
-          >
+          <form onSubmit={handleSubmit} className="mt-10  gap-10">
             {/* Left Column */}
             <div className="grid grid-cols-2 gap-6">
               <div className="text-sm">

@@ -11,7 +11,7 @@ export default function PropertyCard({ property }) {
     property;
   return (
     <Link href={`/property/${id}`}>
-      <div className="border rounded-xl hover:shadow-xl">
+      <div className="border rounded-2xl hover:shadow-xl">
         <div className="relative">
           <Image
             src={image}

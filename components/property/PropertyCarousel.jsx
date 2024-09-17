@@ -6,7 +6,16 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import PropertyCard from "./PropertyCard";
-export default function PropertyCarousel({ property }) {
+export default async function PropertyCarousel({ property }) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-properties`
+  );
+  const { properties } = await res.json();
+
+  const filteredData = properties.filter(
+    (item) => item.city.region.name === property.city.region.name
+  );
+
   return (
     <section className="mt-14">
       <h2 className="text-[#021526] text-3xl font-semibold ">
@@ -21,12 +30,12 @@ export default function PropertyCarousel({ property }) {
         className="mt-12 w-full max-w-[1700px] mx-auto"
       >
         <CarouselContent className="">
-          {Array.from({ length: 5 }).map((_, index) => (
+          {filteredData.map((filterdProperty, index) => (
             <CarouselItem
               key={index}
               className="pl-5 md:basis-1/3 lg:basis-1/4"
             >
-              <PropertyCard property={property} />
+              <PropertyCard property={filterdProperty} />
             </CarouselItem>
           ))}
         </CarouselContent>
