@@ -6,7 +6,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import PropertyCard from "./PropertyCard";
-export default function PropertyCarousel() {
+export default function PropertyCarousel({ property }) {
   return (
     <section className="mt-14">
       <h2 className="text-[#021526] text-3xl font-semibold ">
@@ -26,7 +26,7 @@ export default function PropertyCarousel() {
               key={index}
               className="pl-5 md:basis-1/3 lg:basis-1/4"
             >
-              <PropertyCard />
+              <PropertyCard property={property} />
             </CarouselItem>
           ))}
         </CarouselContent>

@@ -132,7 +132,7 @@ export default function AddButton() {
                 </label>
 
                 {/* Email Input */}
-                <label className="block mt-10 text-[#021526] font-semibold">
+                <label className="block mt-7 text-[#021526] font-semibold">
                   ელ-ფოსტა *
                   <input
                     type="email"
@@ -165,7 +165,7 @@ export default function AddButton() {
                 </label>
 
                 {/* Phone Input */}
-                <label className="block mt-10 text-[#021526] font-semibold">
+                <label className="block mt-7 text-[#021526] font-semibold">
                   ტელეფონის ნომერი
                   <input
                     type="tel"
@@ -184,7 +184,7 @@ export default function AddButton() {
               დაამატე აგენტი
             </Button> */}
 
-            <div className="mt-2  flex justify-center items-start flex-col gap-2 w-full">
+            <div className="mt-7  flex justify-center items-start flex-col gap-2 w-full">
               <label className="text-[#021526] font-semibold text-sm">
                 ატვირთეთ ფოტო *
               </label>

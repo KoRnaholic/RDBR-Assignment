@@ -1,40 +1,48 @@
 import Image from "next/image";
-import hotel from "../../public/images/hotel.png";
+
 import pin from "../../public/icons/pin.svg";
 import bed from "../../public/icons/bed.svg";
-import area from "../../public/icons/area.svg";
+import total from "../../public/icons/area.svg";
 import zip from "../../public/icons/zip.svg";
 import Link from "next/link";
-import { Check, Plus, PlusIcon, Trash2 } from "lucide-react";
 
-export default function PropertyCard() {
+export default function PropertyCard({ property }) {
+  const { address, price, image, bedrooms, area, zip_code, is_rental, id } =
+    property;
   return (
-    <Link href="/property/123">
-      <div className=" rounded-md hover:shadow-xl">
+    <Link href={`/property/${id}`}>
+      <div className="border rounded-xl hover:shadow-xl">
         <div className="relative">
-          <Image src={hotel} alt="hotel" />
+          <Image
+            src={image}
+            width={384}
+            height={307}
+            className="w-[384px] h-[307px] rounded-t-md"
+            alt="hotel"
+          />
           <span className="absolute top-6 left-6 text-white px-[18px] py-1.5 bg-[#39626f] rounded-2xl text-sm">
             იყიდება
           </span>
         </div>
 
-        <div className="text-[#021526B2] p-5 border rounded-lg">
-          <h2 className="text-[#021526] text-2xl font-semibold">80 000 ლ</h2>
+        <div className="text-[#021526B2] p-5 border-b rounded-b-lg">
+          <h2 className="text-[#021526] text-2xl font-semibold">{price} ლ</h2>
           <div className="flex gap-2 mt-1">
             <Image src={pin} alt="pin" />
-            თბილისი, ი.ჭავჭავაძის 53
+            {address}
           </div>
           <div className="flex gap-7 mt-4">
             <div className="flex gap-1 items-center">
-              <Image src={bed} alt="bed" />2
+              <Image src={bed} alt="bed" />
+              {bedrooms}
             </div>
             <div className="flex gap-1 items-center">
-              <Image src={area} alt="area" />
-              55მ
+              <Image src={total} alt="area" />
+              {area}მ
             </div>
             <div className="flex gap-1 items-center">
               <Image src={zip} alt="zip" />
-              0160
+              {zip_code}
             </div>
           </div>
         </div>

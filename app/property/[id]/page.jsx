@@ -9,7 +9,18 @@ import zip from "../../../public/icons/zip.svg";
 import PropertyDeleteModal from "@/components/property/PropertyDeleteModal";
 import PropertyCarousel from "@/components/property/PropertyCarousel";
 
-export default function PropertyPage(props) {
+export default async function PropertyPage({ params }) {
+  const res = await fetch(
+    `https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${params.id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const property = await res.json();
+  console.log(property);
   return (
     <div className="px-40 py-16">
       <Link href="/">
@@ -20,9 +31,11 @@ export default function PropertyPage(props) {
         <div className="">
           <div className="text-[#808A93] relative inline-flex flex-col gap-2">
             <Image
-              src={property}
+              src={property.image}
+              width={839}
+              height={670}
               alt="property"
-              className="w-[839px] h-[670px]"
+              className="w-[839px] h-[670px] rounded-t-xl"
             />
             <span className="absolute top-10 left-10 text-white px-6 py-2 bg-[#39626f] rounded-3xl text-xl leading-6">
               იყიდება
@@ -63,7 +76,7 @@ export default function PropertyPage(props) {
             <div className="mt-[50px] px-5 flex flex-col gap-4 py-6 border rounded-lg">
               <div className="flex items-center gap-3">
                 <Image
-                  src={property}
+                  src={property.agent.avatar}
                   width={72}
                   height={72}
                   alt="avatar"
@@ -86,7 +99,7 @@ export default function PropertyPage(props) {
         </div>
       </section>
 
-      <PropertyCarousel />
+      <PropertyCarousel property={property} />
     </div>
   );
 }

@@ -1,10 +1,17 @@
 import PropertyCard from "./PropertyCard";
 
-export default function PropertyList() {
+export default async function PropertyList() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-properties`
+  );
+  const { properties } = await res.json();
+
+  // console.log(properties);
+
   return (
     <section className="mt-16 flex flex-wrap justify-center gap-6  gap-y-8">
-      {[...Array(10)].map((_, index) => {
-        return <PropertyCard key={index} />;
+      {properties.map((property, index) => {
+        return <PropertyCard property={property} key={index} />;
       })}
     </section>
   );

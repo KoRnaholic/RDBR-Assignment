@@ -20,7 +20,6 @@ export default function AddProperty() {
       .then((data) => {
         setData(data);
         // setLoading(false)
-        console.log(data);
       });
 
     fetch("http://localhost:3000//api/get-agents")
@@ -28,7 +27,6 @@ export default function AddProperty() {
       .then((data) => {
         setAgents(data.agents);
         // setLoading(false)
-        console.log(data.agents);
       });
   }, []);
 
