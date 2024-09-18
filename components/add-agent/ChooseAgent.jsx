@@ -12,7 +12,7 @@ export default function ChooseAgent({ agents }) {
           name="email"
         >
           {agents?.map((agent) => (
-            <option>
+            <option key={agent.id}>
               {agent.name} {agent.surname}
             </option>
           ))}
