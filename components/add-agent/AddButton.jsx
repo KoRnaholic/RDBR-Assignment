@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "../ui/button";
-import { Check, Plus, PlusIcon, Trash2 } from "lucide-react";
-
+import { PlusIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -11,44 +10,62 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
-import UploadImage from "./UploadImage";
-import Image from "next/image";
+import { useEffect, useState } from "react";
+import ImageUploadInput from "./ImageUploadInput";
+import AgentFormInputs from "./AgentFormInputs";
 
 export default function AddButton() {
-  const [inputNameValue, setInputNameValue] = useState("");
-  const [inputSurnameValue, setInputSurnameValue] = useState("");
-  const [inputEmailValue, setInputEmailValue] = useState("");
-  const [inputPhoneValue, setInputPhoneValue] = useState("");
-
+  const [formValues, setFormValues] = useState({
+    name: "",
+    surname: "",
+    email: "",
+    phone: "",
+  });
   const [selectedImage, setSelectedImage] = useState(null);
-  console.log(selectedImage.size);
+  const [previewImage, setPreviewImage] = useState(null);
 
   const disabled = selectedImage === null ? false : true;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
+    sessionStorage.setItem(name, value);
+  };
+
+  const convertImageToBase64 = (file) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result;
+      sessionStorage.setItem("selectedImage", base64String);
+      setPreviewImage(base64String);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+    convertImageToBase64(file);
+  };
 
   const handleRemoveImage = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setSelectedImage(null);
-  };
-
-  const handleFileChange = (e) => {
-    setSelectedImage(e.target.files[0]);
+    setPreviewImage(null);
+    sessionStorage.removeItem("selectedImage");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Create FormData object to hold form fields and file
     const formData = new FormData();
-    formData.append("name", inputNameValue);
-    formData.append("surname", inputSurnameValue);
-    formData.append("email", inputEmailValue);
-    formData.append("phone", inputPhoneValue);
+    Object.keys(formValues).forEach((key) =>
+      formData.append(key, formValues[key])
+    );
     formData.append("avatar", selectedImage);
 
     try {
-      const response = await fetch(
+      await fetch(
         "https://api.real-estate-manager.redberryinternship.ge/api/agents",
         {
           method: "POST",
@@ -58,25 +75,29 @@ export default function AddButton() {
           },
         }
       );
-
-      // Check if response is JSON or an error page
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        const result = await response.json();
-        console.log("Result:", result);
-      } else {
-        const text = await response.text();
-        console.error("Received non-JSON response:", text);
-      }
     } catch (error) {
       console.error("Error during fetch:", error);
     }
   };
 
-  const handleNameChange = (e) => setInputNameValue(e.target.value);
-  const handleSurnameChange = (e) => setInputSurnameValue(e.target.value);
-  const handleEmailChange = (e) => setInputEmailValue(e.target.value);
-  const handlePhoneChange = (e) => setInputPhoneValue(e.target.value);
+  useEffect(() => {
+    const savedValues = {
+      name: sessionStorage.getItem("name") || "",
+      surname: sessionStorage.getItem("surname") || "",
+      email: sessionStorage.getItem("email") || "",
+      phone: sessionStorage.getItem("phone") || "",
+    };
+    setFormValues((prev) => ({ ...prev, ...savedValues }));
+    const savedImage = sessionStorage.getItem("selectedImage");
+    if (savedImage) setPreviewImage(savedImage);
+  }, []);
+
+  const handleClearInputs = () => {
+    setFormValues({ name: "", surname: "", email: "", phone: "" });
+    setSelectedImage(null);
+    setPreviewImage(null);
+    sessionStorage.clear();
+  };
 
   return (
     <>
@@ -95,125 +116,23 @@ export default function AddButton() {
           </DialogHeader>
 
           <form onSubmit={handleSubmit} className="mt-10  gap-10">
-            {/* Left Column */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-sm">
-                {/* Name Input */}
-                <label className="block text-[#021526] font-semibold">
-                  სახელი *
-                  <input
-                    type="text"
-                    className="mt-1 block w-full border px-2 outline-none rounded-md shadow-sm py-2"
-                    value={inputNameValue}
-                    onChange={handleNameChange} // Controlled input for name
-                    name="name"
-                  />
-                  <span
-                    className={`flex items-center gap-1 mt-1 font-medium ${
-                      inputNameValue.length >= 2
-                        ? "text-[#45A849]"
-                        : "text-black"
-                    }`}
-                  >
-                    <Check className="w-4 h-4" /> მინიმუმ ორი სიმბოლო
-                  </span>
-                </label>
-
-                {/* Email Input */}
-                <label className="block mt-7 text-[#021526] font-semibold">
-                  ელ-ფოსტა *
-                  <input
-                    type="email"
-                    className="mt-1 block w-full outline-none px-2 rounded-md border py-2"
-                    value={inputEmailValue}
-                    onChange={handleEmailChange} // Controlled input for email
-                    name="email"
-                  />
-                  <span className="flex items-center gap-1 mt-1 font-medium">
-                    <Check className="w-4 h-4" /> გამოიყენეთ @redberry.ge ფოსტა
-                  </span>
-                </label>
-              </div>
-
-              {/* Right Column */}
-              <div className="text-sm">
-                {/* Surname Input */}
-                <label className="block text-[#021526] font-semibold">
-                  გვარი
-                  <input
-                    type="text"
-                    className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"
-                    value={inputSurnameValue}
-                    onChange={handleSurnameChange} // Controlled input for surname
-                    name="surname"
-                  />
-                  <span className="flex items-center gap-1 mt-1 font-medium">
-                    <Check className="w-4 h-4" /> მინიმუმ ორი სიმბოლო
-                  </span>
-                </label>
-
-                {/* Phone Input */}
-                <label className="block mt-7 text-[#021526] font-semibold">
-                  ტელეფონის ნომერი
-                  <input
-                    type="tel"
-                    className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"
-                    value={inputPhoneValue}
-                    onChange={handlePhoneChange} // Controlled input for phone
-                    name="phone"
-                  />
-                  <span className="flex items-center gap-1 mt-1 font-medium">
-                    <Check className="w-4 h-4" /> მხოლოდ რიცხვები
-                  </span>
-                </label>
-              </div>
-            </div>
-            {/* <Button variant="primary" type="submit">
-              დაამატე აგენტი
-            </Button> */}
-
-            <div className="mt-7  flex justify-center items-start flex-col gap-2 w-full">
-              <label className="text-[#021526] font-semibold text-sm">
-                ატვირთეთ ფოტო *
-              </label>
-              <label
-                htmlFor="file-upload" // In React, use "htmlFor"
-                className={`${
-                  disabled ? "cursor-default" : "cursor-pointer"
-                } border-2 border-gray-400  border-dashed w-full rounded-md
-     text-gray-700  px-24 h-[120px]
-      relative flex justify-center items-center`}
-              >
-                {selectedImage ? (
-                  <div className="relative">
-                    <Image
-                      src={URL.createObjectURL(selectedImage)}
-                      alt="Uploaded Preview"
-                      className="object-cover w-24 h-20 rounded-md"
-                      width={100}
-                      height={100}
-                    />
-                    <Trash2
-                      onClick={handleRemoveImage}
-                      className="absolute -bottom-2 -right-2 bg-white h-7 w-7 p-1 rounded-full border border-black cursor-pointer"
-                    />
-                  </div>
-                ) : (
-                  <Plus className="mx-auto border rounded-full p-1 border-black" />
-                )}
-                <input
-                  id="file-upload"
-                  type="file"
-                  className="hidden"
-                  onChange={handleFileChange}
-                  // disabled={disabled}
-                  name="image"
-                />
-              </label>
-            </div>
+            <AgentFormInputs
+              handleInputChange={handleInputChange}
+              formValues={formValues}
+            />
+            <ImageUploadInput
+              previewImage={previewImage}
+              handleRemoveImage={handleRemoveImage}
+              handleFileChange={handleFileChange}
+              disabled={disabled}
+            />
             <DialogFooter className="mt-14">
               <DialogClose asChild>
-                <Button variant="secondary" type="close">
+                <Button
+                  onClick={handleClearInputs}
+                  variant="secondary"
+                  type="button"
+                >
                   გაუქმება
                 </Button>
               </DialogClose>
@@ -222,9 +141,6 @@ export default function AddButton() {
               </Button>
             </DialogFooter>
           </form>
-
-          {/* Image upload */}
-          {/* <UploadImage /> */}
         </DialogContent>
       </Dialog>
     </>
