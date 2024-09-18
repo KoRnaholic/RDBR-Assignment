@@ -44,7 +44,7 @@ export default function AgentFormInputs({ handleInputChange, formValues }) {
       <div className="text-sm">
         {/* Surname Input */}
         <label className="block text-[#021526] font-semibold">
-          გვარი
+          გვარი *
           <input
             type="text"
             className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"
@@ -59,7 +59,7 @@ export default function AgentFormInputs({ handleInputChange, formValues }) {
 
         {/* Phone Input */}
         <label className="block mt-7 text-[#021526] font-semibold">
-          ტელეფონის ნომერი
+          ტელეფონის ნომერი *
           <input
             type="tel"
             className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"

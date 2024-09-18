@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import ImageUploadInput from "./ImageUploadInput";
 import AgentFormInputs from "./AgentFormInputs";
 
-export default function AddButton() {
+export default function AddAgentModal() {
   const [formValues, setFormValues] = useState({
     name: "",
     surname: "",
@@ -58,6 +58,15 @@ export default function AddButton() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // if values are empty
+    const { name, surname, email, phone } = formValues;
+    if (!name || !surname || !email || !phone || !selectedImage) {
+      console.warn("Please fill out all fields and select an image.");
+      return;
+    }
+    //
+
     const formData = new FormData();
     Object.keys(formValues).forEach((key) =>
       formData.append(key, formValues[key])

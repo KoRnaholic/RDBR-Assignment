@@ -2,8 +2,9 @@ import { Button } from "../ui/button";
 import { PlusIcon } from "lucide-react";
 
 import Region from "../Region";
-import AddButton from "../add-agent/AddButton";
+import AddButton from "../add-agent/AddAgentModal";
 import Link from "next/link";
+import AddAgentModal from "../add-agent/AddAgentModal";
 
 export default function Filter() {
   return (
@@ -21,7 +22,7 @@ export default function Filter() {
         </Link>
 
         {/* adding agent */}
-        <AddButton />
+        <AddAgentModal />
       </div>
     </div>
   );
