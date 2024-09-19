@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import ImageUploadInput from "./ImageUploadInput";
 import AgentFormInputs from "./AgentFormInputs";
+import { useRouter } from "next/navigation";
 
 export default function AddAgentModal() {
   const [formValues, setFormValues] = useState({
@@ -21,16 +22,13 @@ export default function AddAgentModal() {
     email: "",
     phone: "",
   });
+  const router = useRouter();
+  // Force refresh the page
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
   const disabled = selectedImage === null ? false : true;
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
-    sessionStorage.setItem(name, value);
-  };
 
   const convertImageToBase64 = (file) => {
     const reader = new FileReader();
@@ -74,7 +72,7 @@ export default function AddAgentModal() {
     formData.append("avatar", selectedImage);
 
     try {
-      await fetch(
+      const res = await fetch(
         "https://api.real-estate-manager.redberryinternship.ge/api/agents",
         {
           method: "POST",
@@ -84,6 +82,11 @@ export default function AddAgentModal() {
           },
         }
       );
+      if (res?.ok) {
+        // router.reload();
+        router.push("/test");
+        handleClearInputs();
+      }
     } catch (error) {
       console.error("Error during fetch:", error);
     }
@@ -126,8 +129,8 @@ export default function AddAgentModal() {
 
           <form onSubmit={handleSubmit} className="mt-10  gap-10">
             <AgentFormInputs
-              handleInputChange={handleInputChange}
               formValues={formValues}
+              setFormValues={setFormValues}
             />
             <ImageUploadInput
               previewImage={previewImage}

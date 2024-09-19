@@ -1,17 +1,30 @@
+"use client";
 import Filter from "@/components/filter/Filter";
-
 import PropertyList from "@/components/property/PropertyList";
-export const revalidate = 0;
-export default async function Home() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-agents`);
-  const agents = await res.json();
+import { useEffect, useState } from "react";
 
-  console.log(agents);
+export default function Home() {
+  const [properties, setProperties] = useState(null);
+  const [originalProperties, setOriginalProperties] = useState(null); // Keep original properties
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-properties`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProperties(data.properties);
+        setOriginalProperties(data.properties); // Store the original properties list
+      });
+  }, []);
+
   return (
     <div className="px-36 pt-20">
-      <Filter />
+      <Filter
+        properties={properties}
+        setProperties={setProperties}
+        originalProperties={originalProperties} // Pass original properties
+      />
 
-      <PropertyList />
+      <PropertyList properties={properties} />
     </div>
   );
 }

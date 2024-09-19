@@ -6,11 +6,19 @@ import AddButton from "../add-agent/AddAgentModal";
 import Link from "next/link";
 import AddAgentModal from "../add-agent/AddAgentModal";
 
-export default function Filter() {
+export default function Filter({
+  properties,
+  originalProperties,
+  setProperties,
+}) {
   return (
     <div className=" flex justify-between items-center">
       <div>
-        <Region />
+        <Region
+          originalProperties={originalProperties}
+          properties={properties}
+          setProperties={setProperties}
+        />
       </div>
 
       <div className="flex gap-4">

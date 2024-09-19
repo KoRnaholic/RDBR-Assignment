@@ -3,8 +3,14 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "../ui/button";
 import { useEffect, useRef, useState } from "react";
 
-export default function FilterRegion() {
+export default function FilterRegion({
+  properties,
+  regions,
+  setProperties,
+  originalProperties,
+}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedRegions, setSelectedRegions] = useState([]); // Store selected regions
   const dropdownRef = useRef(null);
   const regionRef = useRef(null);
 
@@ -25,25 +31,35 @@ export default function FilterRegion() {
     };
   }, []);
 
-  const toggleDropdown = (e) => {
-    // e.stopPropagation();
-
+  const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-  const options = [
-    "ქართლი",
-    "გურია",
-    "აჭარა",
-    "კახეთი",
-    "რაჭა",
-    "სვანეთი",
-    "იმერეთი",
-    "ლეჩხუმი",
-    "მცხეთა-მთიანეთი",
-    "სამეგრელო",
-    "სამცხე-ჯავახეთი",
-    "თბილისი",
-  ];
+
+  // Handle checkbox changes
+  const handleCheckboxChange = (regionName) => {
+    if (selectedRegions.includes(regionName)) {
+      // Remove the region if it's already selected (i.e., checkbox is unchecked)
+      setSelectedRegions(selectedRegions.filter((name) => name !== regionName));
+    } else {
+      // Add the region if it's not selected (i.e., checkbox is checked)
+      setSelectedRegions([...selectedRegions, regionName]);
+    }
+  };
+
+  // Filter properties based on selected regions
+  const handleSubmit = () => {
+    if (selectedRegions.length === 0) {
+      // If no regions are selected, reset to original properties
+      setProperties(originalProperties);
+    } else {
+      // Filter properties by selected region names
+      const filteredProperties = originalProperties.filter((property) =>
+        selectedRegions.includes(property.city.region.name)
+      );
+      setProperties(filteredProperties); // Update the properties list with filtered data
+    }
+    setIsOpen(false); // Close the dropdown after submitting
+  };
 
   return (
     <>
@@ -69,22 +85,26 @@ export default function FilterRegion() {
         >
           <h3 className="text-[#021526] font-semibold">რეგიონის მიხედვით</h3>
 
-          <div className="  grid grid-cols-3 gap-x-14 gap-4 ">
-            {options.map((option, index) => (
+          <div className="grid grid-cols-3 gap-x-14 gap-4">
+            {regions?.map((region, index) => (
               <label key={index} className="flex items-center space-x-3">
                 <input
                   type="checkbox"
-                  // checked={selectedOptions.includes(option)}
-                  // onChange={() => handleCheckboxChange(option)}
+                  checked={selectedRegions.includes(region.name)}
+                  onChange={() => handleCheckboxChange(region.name)} // Handle checkbox state
                   className="h-5 w-5 accent-[#45A849]"
                 />
-                <span className="text-gray-700">{option}</span>
+                <span className="text-gray-700">{region.name}</span>
               </label>
             ))}
           </div>
 
           <div className="mt-3 flex justify-end">
-            <Button variant="primary" className="w-20 h-9">
+            <Button
+              variant="primary"
+              className="w-20 h-9"
+              onClick={handleSubmit}
+            >
               არჩევა
             </Button>
           </div>
