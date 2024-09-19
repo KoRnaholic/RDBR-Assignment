@@ -97,14 +97,17 @@ export default async function PropertyPage({ params }) {
                   className="rounded-full h-[72px]"
                 />
                 <div>
-                  <p className="text-[#021526]">სოფიო გელოვანი</p>
+                  <p className="text-[#021526]">
+                    {property.agent.name}
+                    {property.agent.surname}
+                  </p>
                   <p>აგენტი</p>
                 </div>
               </div>
 
               <div className="">
-                <p>sophio.gelovany@redbary.ge</p>
-                <p>577 777 777</p>
+                <p>{property.agent.email}</p>
+                <p>{property.agent.phone}</p>
               </div>
             </div>
           </div>

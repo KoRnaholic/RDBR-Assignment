@@ -3,7 +3,13 @@ import { ChevronDown } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 
-export default function FilterByBed() {
+export default function FilterByBed({
+  filterState,
+  originalProperties,
+  setProperties,
+  properties,
+  filteredByRegion,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const bedRef = useRef(null);
@@ -16,6 +22,32 @@ export default function FilterByBed() {
     ) {
       setIsOpen(false);
     }
+  };
+
+  const handleInputChange = (e) => {
+    filterState.bedroomsState.setBedrooms(e.target.value);
+  };
+
+  const handleFilter = () => {
+    if (
+      !filterState.bedroomsState.bedrooms ||
+      isNaN(filterState.bedroomsState.bedrooms)
+    ) {
+      // If no valid bedroom number is input, reset to original properties
+      setProperties(originalProperties);
+    } else {
+      const filteredByBedrooms = originalProperties.filter(
+        (property) =>
+          property.bedrooms === parseInt(filterState.bedroomsState.bedrooms, 10)
+      );
+
+      console.log(filteredByRegion, filteredByBedrooms);
+
+      const filteredProp2 = [...filteredByRegion, ...filteredByBedrooms];
+
+      setProperties(filteredProp2);
+    }
+    setIsOpen(false); // Close the dropdown after applying the filter
   };
 
   useEffect(() => {
@@ -55,11 +87,20 @@ export default function FilterByBed() {
           </h3>
 
           <div className="my-2  grid grid-cols-3 gap-x-14 gap-4 text-black">
-            <input className="border w-10 h-10 text-center rounded-lg mx-auto  text-gray-900 focus:outline-none focus:border-gray-500" />
+            <input
+              className="border w-10 h-10 text-center rounded-lg mx-auto
+              text-gray-900 focus:outline-none focus:border-gray-500"
+              value={filterState.bedroomsState.bedrooms}
+              onChange={handleInputChange}
+            />
           </div>
 
           <div className="mt-3 flex justify-end">
-            <Button variant="primary" className="w-20 h-9">
+            <Button
+              onClick={handleFilter}
+              variant="primary"
+              className="w-20 h-9"
+            >
               არჩევა
             </Button>
           </div>

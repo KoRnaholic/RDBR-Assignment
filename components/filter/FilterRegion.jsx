@@ -4,13 +4,14 @@ import { Button } from "../ui/button";
 import { useEffect, useRef, useState } from "react";
 
 export default function FilterRegion({
-  properties,
   regions,
   setProperties,
   originalProperties,
+  filterState,
+  properties,
+  filteredByBedrooms,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedRegions, setSelectedRegions] = useState([]); // Store selected regions
   const dropdownRef = useRef(null);
   const regionRef = useRef(null);
 
@@ -37,26 +38,37 @@ export default function FilterRegion({
 
   // Handle checkbox changes
   const handleCheckboxChange = (regionName) => {
-    if (selectedRegions.includes(regionName)) {
+    if (filterState.regionsState.selectedRegions.includes(regionName)) {
       // Remove the region if it's already selected (i.e., checkbox is unchecked)
-      setSelectedRegions(selectedRegions.filter((name) => name !== regionName));
+      filterState.regionsState.setSelectedRegions(
+        filterState.regionsState.selectedRegions.filter(
+          (name) => name !== regionName
+        )
+      );
     } else {
       // Add the region if it's not selected (i.e., checkbox is checked)
-      setSelectedRegions([...selectedRegions, regionName]);
+      filterState.regionsState.setSelectedRegions([
+        ...filterState.regionsState.selectedRegions,
+        regionName,
+      ]);
     }
   };
 
   // Filter properties based on selected regions
   const handleSubmit = () => {
-    if (selectedRegions.length === 0) {
+    if (filterState.regionsState.selectedRegions.length === 0) {
       // If no regions are selected, reset to original properties
       setProperties(originalProperties);
     } else {
       // Filter properties by selected region names
       const filteredProperties = originalProperties.filter((property) =>
-        selectedRegions.includes(property.city.region.name)
+        filterState.regionsState.selectedRegions.includes(
+          property.city.region.name
+        )
       );
-      setProperties(filteredProperties); // Update the properties list with filtered data
+
+      const filteredProp = [...filteredByBedrooms, ...filteredProperties];
+      setProperties(filteredProp); // Update the properties list with filtered data
     }
     setIsOpen(false); // Close the dropdown after submitting
   };
@@ -90,7 +102,9 @@ export default function FilterRegion({
               <label key={index} className="flex items-center space-x-3">
                 <input
                   type="checkbox"
-                  checked={selectedRegions.includes(region.name)}
+                  checked={filterState.regionsState.selectedRegions.includes(
+                    region.name
+                  )}
                   onChange={() => handleCheckboxChange(region.name)} // Handle checkbox state
                   className="h-5 w-5 accent-[#45A849]"
                 />

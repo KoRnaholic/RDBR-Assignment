@@ -12,6 +12,9 @@ export default function Region({
   originalProperties,
   properties,
   setProperties,
+  filterState,
+  filteredByRegion,
+  filteredByBedrooms,
 }) {
   const [regions, setRegions] = useState(null);
 
@@ -27,10 +30,12 @@ export default function Region({
     <>
       <div className=" border-2  rounded-lg p-0.5 inline-flex gap-5 ">
         <FilterRegion
+          filterState={filterState}
           originalProperties={originalProperties}
           properties={properties}
           setProperties={setProperties}
           regions={regions}
+          filteredByBedrooms={filteredByBedrooms}
         />
 
         <FilterBy
@@ -40,7 +45,13 @@ export default function Region({
         />
 
         <FilterBy name="ფართობის მიხედვით" label="ფართობი" categories={area} />
-        <FilterByBed />
+        <FilterByBed
+          originalProperties={originalProperties}
+          properties={properties}
+          setProperties={setProperties}
+          filterState={filterState}
+          filteredByRegion={filteredByRegion}
+        />
       </div>
     </>
   );
