@@ -3,7 +3,7 @@ import "./globals.css";
 import Header from "@/components/header/Header";
 
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
+  src: "./fonts/HelveticaNeueMedium.otf",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#FFFFFF] pb-20`}
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-[#FFFFFF] pb-20`}
       >
         <Header />
         {children}

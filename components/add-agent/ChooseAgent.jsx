@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 export default function ChooseAgent({ agents, setAgents }) {
   const [selectedAgent, setSelectedAgent] = useState("");
 
+  console.log(selectedAgent);
+
   useEffect(() => {
     fetch("http://localhost:3000/api/get-agents")
       .then((res) => res.json())
@@ -48,7 +50,7 @@ export default function ChooseAgent({ agents, setAgents }) {
         {/* </select>  */}
       </label>
 
-      <Select>
+      <Select value={selectedAgent} onChange={handleAgentChange}>
         <SelectTrigger className="w-1/2">
           <SelectValue placeholder="აირჩიე" />
         </SelectTrigger>
@@ -61,7 +63,8 @@ export default function ChooseAgent({ agents, setAgents }) {
             {agents?.map((agent) => (
               <SelectItem
                 className="border-b cursor-pointer"
-                value={agent.id}
+                value={`${agent.name}${agent.surname}`}
+                on
                 key={agent.id}
               >
                 {agent.name} {agent.surname}
