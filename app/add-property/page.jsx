@@ -19,7 +19,15 @@ export default function AddProperty() {
   const [agents, setAgents] = useState(null);
 
   const disabled = selectedImage === null ? false : true;
-  const [data, setData] = useState(null);
+  const [regions, setRegions] = useState(null);
+  const [cities, setCities] = useState(null);
+
+  const regionId = regions?.find(
+    (region) => region.name === inputRegionValue
+  )?.id;
+  const cityId = cities?.find((city) => city.name === inputCityValue)?.id;
+
+  console.log(regionId, cityId);
 
   const convertImageToBase64 = (file) => {
     const reader = new FileReader();
@@ -49,7 +57,13 @@ export default function AddProperty() {
     fetch("https://api.real-estate-manager.redberryinternship.ge/api/regions")
       .then((res) => res.json())
       .then((data) => {
-        setData(data);
+        setRegions(data);
+        // setLoading(false)
+      });
+    fetch("https://api.real-estate-manager.redberryinternship.ge/api/cities")
+      .then((res) => res.json())
+      .then((data) => {
+        setCities(data);
         // setLoading(false)
       });
   }, []);
@@ -75,7 +89,7 @@ export default function AddProperty() {
           handleIndexChange={handleIndexChange}
           handleRegionChange={handleRegionChange}
           handleCityChange={handleCityChange}
-          data={data}
+          data={regions}
         />
         <PropertyDetails />
         <PropertyImageUpload
