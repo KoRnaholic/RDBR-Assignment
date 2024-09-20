@@ -10,6 +10,7 @@ export default function FilterRegion({
   filterState,
   properties,
   filteredByBedrooms,
+  filteredByRegion,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -58,16 +59,11 @@ export default function FilterRegion({
   const handleSubmit = () => {
     if (filterState.regionsState.selectedRegions.length === 0) {
       // If no regions are selected, reset to original properties
-      setProperties(originalProperties);
+      // setProperties(originalProperties);
     } else {
       // Filter properties by selected region names
-      const filteredProperties = originalProperties.filter((property) =>
-        filterState.regionsState.selectedRegions.includes(
-          property.city.region.name
-        )
-      );
 
-      const filteredProp = [...filteredByBedrooms, ...filteredProperties];
+      const filteredProp = [...filteredByBedrooms, ...filteredByRegion];
       setProperties(filteredProp); // Update the properties list with filtered data
     }
     setIsOpen(false); // Close the dropdown after submitting

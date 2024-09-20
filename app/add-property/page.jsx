@@ -16,9 +16,9 @@ export default function AddProperty() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
-  const disabled = selectedImage === null ? false : true;
-
   const [agents, setAgents] = useState(null);
+
+  const disabled = selectedImage === null ? false : true;
   const [data, setData] = useState(null);
 
   const convertImageToBase64 = (file) => {
@@ -52,13 +52,6 @@ export default function AddProperty() {
         setData(data);
         // setLoading(false)
       });
-
-    fetch("http://localhost:3000//api/get-agents")
-      .then((res) => res.json())
-      .then((data) => {
-        setAgents(data.agents);
-        // setLoading(false)
-      });
   }, []);
 
   const handleAdressChange = (e) => setInputAdressValue(e.target.value);
@@ -84,16 +77,14 @@ export default function AddProperty() {
           handleCityChange={handleCityChange}
           data={data}
         />
-
         <PropertyDetails />
-
         <PropertyImageUpload
           previewImage={previewImage}
           handleRemoveImage={handleRemoveImage}
           handleFileChange={handleFileChange}
           disabled={disabled}
         />
-        <ChooseAgent agents={agents} />
+        <ChooseAgent agents={agents} setAgents={setAgents} />
         <PropertyButtons />
       </form>
     </section>

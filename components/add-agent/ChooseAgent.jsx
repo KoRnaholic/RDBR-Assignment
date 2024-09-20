@@ -1,4 +1,15 @@
-export default function ChooseAgent({ agents }) {
+"use client";
+import { useEffect, useState } from "react";
+
+export default function ChooseAgent({ agents, setAgents }) {
+  useEffect(() => {
+    fetch("http://localhost:3000//api/get-agents")
+      .then((res) => res.json())
+      .then((data) => {
+        setAgents(data.agents);
+        // setLoading(false)
+      });
+  }, []);
   return (
     <div className="mt-10 w-full text-[#021526] font-semibold">
       <label>აგენტი</label>

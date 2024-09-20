@@ -1,12 +1,11 @@
 "use client";
 import FilterRegion from "./filter/FilterRegion";
 
-import FilterBy from "./filter/FilterBy";
+import FilterBy from "./filter/FilterByPrice";
 import FilterByBed from "./filter/FilterByBed";
 import { useEffect, useState } from "react";
-
-const prices = [50000, 100000, 150000, 200000, 300000];
-const area = [50000, 50000, 50000, 50000, 50000];
+import FilterByPrice from "./filter/FilterByPrice";
+import FilterByArea from "./filter/FilterByArea";
 
 export default function Region({
   originalProperties,
@@ -36,21 +35,19 @@ export default function Region({
           setProperties={setProperties}
           regions={regions}
           filteredByBedrooms={filteredByBedrooms}
+          filteredByRegion={filteredByRegion}
         />
 
-        <FilterBy
-          name="ფასის მიხედვით"
-          label="საფასო კატეგორია"
-          categories={prices}
-        />
+        <FilterByPrice filterState={filterState} />
 
-        <FilterBy name="ფართობის მიხედვით" label="ფართობი" categories={area} />
+        <FilterByArea filterState={filterState} />
         <FilterByBed
           originalProperties={originalProperties}
           properties={properties}
           setProperties={setProperties}
           filterState={filterState}
           filteredByRegion={filteredByRegion}
+          filteredByBedrooms={filteredByBedrooms}
         />
       </div>
     </>

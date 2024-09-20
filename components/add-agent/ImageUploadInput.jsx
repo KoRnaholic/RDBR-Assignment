@@ -6,7 +6,22 @@ export default function ImageUploadInput({
   handleRemoveImage,
   handleFileChange,
   disabled,
+  selectedImage,
 }) {
+  const imageIsValid = () => {
+    if (
+      selectedImage?.size === undefined ||
+      (selectedImage?.size / (1024 * 1024)).toFixed(2) <= 1
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isValid = imageIsValid();
+  const validImage = (selectedImage?.size / (1024 * 1024)).toFixed(2) <= 1;
+  console.log(selectedImage?.size);
   return (
     <div className="mt-7  flex justify-center items-start flex-col gap-2 w-full">
       <label className="text-[#021526] font-semibold text-sm">
@@ -16,9 +31,10 @@ export default function ImageUploadInput({
         htmlFor="file-upload" // In React, use "htmlFor"
         className={`${
           disabled ? "cursor-default" : "cursor-pointer"
-        } border-2 border-gray-400  border-dashed w-full rounded-md
+        } border-2   border-dashed w-full rounded-md
 text-gray-700  px-24 h-[120px]
-relative flex justify-center items-center`}
+relative flex justify-center items-center
+${isValid ? "border-gray-400" : "border-red-400"}`}
       >
         {previewImage ? (
           <div className="relative">
@@ -41,6 +57,7 @@ relative flex justify-center items-center`}
           id="file-upload"
           type="file"
           className="hidden"
+          required
           onChange={handleFileChange}
           // disabled={disabled}
           name="image"

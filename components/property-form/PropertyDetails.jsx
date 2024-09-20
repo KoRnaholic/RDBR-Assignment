@@ -28,6 +28,7 @@ export default function PropertyDetails() {
               value={formValues.price}
               onChange={handleInputChange}
               name="price"
+              required
             />
             <span
               className={`flex items-center gap-1 mt-1 font-medium ${
@@ -47,6 +48,7 @@ export default function PropertyDetails() {
               value={formValues.bedrooms}
               onChange={handleInputChange}
               name="bedrooms"
+              required
             />
             <span className="flex items-center gap-1 mt-1 font-medium">
               <Check className="w-4 h-4" /> მხოლოდ რიცხვები
@@ -57,13 +59,14 @@ export default function PropertyDetails() {
         <div className="text-sm">
           {/* Area Input */}
           <label className="block text-[#021526] font-semibold">
-            ფართობი
+            ფართობი *
             <input
               type="text"
               className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"
               value={formValues.area}
               onChange={handleInputChange}
               name="area"
+              required
             />
             <span className="flex items-center gap-1 mt-1 font-medium">
               <Check className="w-4 h-4" /> მხოლოდ რიცხვები
@@ -80,6 +83,7 @@ export default function PropertyDetails() {
           value={formValues.description}
           onChange={handleInputChange}
           name="description"
+          required
         ></textarea>
       </div>
     </div>

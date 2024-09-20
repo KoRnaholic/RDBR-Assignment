@@ -28,6 +28,8 @@ export default function AddAgentModal() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
+  console.log(selectedImage);
+
   const disabled = selectedImage === null ? false : true;
 
   const convertImageToBase64 = (file) => {
@@ -84,7 +86,7 @@ export default function AddAgentModal() {
       );
       if (res?.ok) {
         // router.reload();
-        router.push("/test");
+        router.push("/add-property");
         handleClearInputs();
       }
     } catch (error) {
@@ -137,6 +139,7 @@ export default function AddAgentModal() {
               handleRemoveImage={handleRemoveImage}
               handleFileChange={handleFileChange}
               disabled={disabled}
+              selectedImage={selectedImage}
             />
             <DialogFooter className="mt-14">
               <DialogClose asChild>

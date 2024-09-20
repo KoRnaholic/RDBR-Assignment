@@ -77,9 +77,9 @@ export default function PropertyLocation({
                 <option key={region.id}>{region.name}</option>
               ))}
             </select>
-            <span className="flex items-center gap-1 mt-1 font-medium">
+            {/* <span className="flex items-center gap-1 mt-1 font-medium">
               <Check className="w-4 h-4" /> გამოიყენეთ @redberry.ge ფოსტა
-            </span>
+            </span> */}
           </label>
         </div>
 
@@ -103,7 +103,7 @@ export default function PropertyLocation({
           {/* Phone Input */}
           {inputRegionValue && (
             <label className="block mt-5 text-[#021526] font-semibold">
-              ქალაქი
+              ქალაქი *
               <select
                 className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"
                 value={inputCityValue}
@@ -115,9 +115,9 @@ export default function PropertyLocation({
                   <option key={city.id}>{city.name}</option>
                 ))}
               </select>
-              <span className="flex items-center gap-1 mt-1 font-medium">
+              {/* <span className="flex items-center gap-1 mt-1 font-medium">
                 <Check className="w-4 h-4" /> მხოლოდ რიცხვები
-              </span>
+              </span> */}
             </label>
           )}
         </div>

@@ -7,11 +7,19 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [properties, setProperties] = useState(null);
   const [originalProperties, setOriginalProperties] = useState(null); // Keep original properties
-  const [loading, setLoading] = useState(true);
-  const [bedrooms, setBedrooms] = useState("");
   const [selectedRegions, setSelectedRegions] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+  const [bedrooms, setBedrooms] = useState("");
+
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [minArea, setMinArea] = useState("");
+  const [maxArea, setMaxArea] = useState("");
+
   console.log(selectedRegions);
+
+  const showClear = bedrooms || minArea || minPrice;
 
   const filterState = {
     bedroomsState: {
@@ -22,21 +30,65 @@ export default function Home() {
       selectedRegions,
       setSelectedRegions,
     },
+    priceState: {
+      minPrice,
+      setMinPrice,
+      maxPrice,
+      setMaxPrice,
+    },
+    areaState: {
+      minArea,
+      setMinArea,
+      maxArea,
+      setMaxArea,
+    },
   };
 
   const filteredByRegion = originalProperties?.filter((property) =>
-    filterState.regionsState.selectedRegions.includes(property.city.region.name)
+    selectedRegions.includes(property.city.region.name)
   );
 
   const filteredByBedrooms = originalProperties?.filter(
-    (property) =>
-      property.bedrooms === parseInt(filterState.bedroomsState.bedrooms, 10)
+    (property) => property.bedrooms === parseInt(bedrooms, 10)
   );
+
+  const handleClear = () => {
+    setBedrooms("");
+    setSelectedRegions([]);
+    setMinArea("");
+    setMaxArea("");
+    setMinPrice("");
+    setMaxPrice("");
+  };
 
   const deleteFilteredRegion = (region) => {
     const newArray = selectedRegions.filter((item) => item !== region);
 
     setSelectedRegions(newArray);
+  };
+
+  const deleteFilteredBedroom = () => {
+    setBedrooms("");
+
+    // Reapply the region filter only
+    let filteredProperties = originalProperties;
+
+    if (selectedRegions.length > 0) {
+      filteredProperties = filteredProperties.filter((property) =>
+        selectedRegions.includes(property.city.region.name)
+      );
+    }
+
+    setProperties(filteredProperties); // Update properties after removing the bedroom filter
+  };
+
+  const deleteFilteredPrice = () => {
+    setMinPrice("");
+    setMaxPrice("");
+  };
+  const deleteFilteredArea = () => {
+    setMinArea("");
+    setMaxArea("");
   };
 
   useEffect(() => {
@@ -52,6 +104,19 @@ export default function Home() {
         setLoading(false); // In case of error, stop showing spinner
       });
   }, []);
+
+  useEffect(() => {
+    if (selectedRegions.length === 0) {
+      // If no regions are selected, show all properties
+      setProperties(originalProperties);
+    } else {
+      // Filter the original properties based on the selected regions
+      const filteredProperties = originalProperties?.filter((property) =>
+        selectedRegions.includes(property.city.region.name)
+      );
+      setProperties(filteredProperties);
+    }
+  }, [selectedRegions, originalProperties]);
 
   return (
     <div className="px-36 pt-20">
@@ -75,8 +140,42 @@ export default function Home() {
               className="w-4 h-4 cursor-pointer"
             />
           </div>
-        ))}{" "}
-        {bedrooms}
+        ))}
+        {minArea && maxArea && (
+          <div className="border flex items-center gap-1 rounded-2xl px-3 py-1">
+            {minArea}მ2 - {maxArea}მ2
+            <X
+              onClick={deleteFilteredArea}
+              className="w-4 h-4 cursor-pointer"
+            />
+          </div>
+        )}
+        {minPrice && maxPrice && (
+          <div className="border flex items-center gap-1 rounded-2xl px-3 py-1">
+            {minPrice}ლ - {maxPrice}ლ
+            <X
+              onClick={deleteFilteredPrice}
+              className="w-4 h-4 cursor-pointer"
+            />
+          </div>
+        )}
+        {bedrooms && (
+          <div className="border flex items-center gap-1 rounded-2xl px-3 py-1">
+            {bedrooms}
+            <X
+              onClick={deleteFilteredBedroom}
+              className="w-4 h-4 cursor-pointer"
+            />
+          </div>
+        )}
+        {showClear && (
+          <div
+            onClick={handleClear}
+            className="text-[#021526] cursor-pointer flex items-center font-semibold"
+          >
+            გასუფთავება
+          </div>
+        )}
       </div>
       {loading ? (
         <div className="flex justify-center mt-40 items-center h-1/3">

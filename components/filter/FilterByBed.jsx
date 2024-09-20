@@ -9,6 +9,7 @@ export default function FilterByBed({
   setProperties,
   properties,
   filteredByRegion,
+  filteredByBedrooms,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -34,13 +35,8 @@ export default function FilterByBed({
       isNaN(filterState.bedroomsState.bedrooms)
     ) {
       // If no valid bedroom number is input, reset to original properties
-      setProperties(originalProperties);
+      // setProperties(originalProperties);
     } else {
-      const filteredByBedrooms = originalProperties.filter(
-        (property) =>
-          property.bedrooms === parseInt(filterState.bedroomsState.bedrooms, 10)
-      );
-
       console.log(filteredByRegion, filteredByBedrooms);
 
       const filteredProp2 = [...filteredByRegion, ...filteredByBedrooms];

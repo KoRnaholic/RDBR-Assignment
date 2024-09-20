@@ -44,6 +44,7 @@ relative flex justify-center items-center`}
             className="hidden"
             onChange={handleFileChange}
             name="image"
+            required
           />
         </label>
       </div>
