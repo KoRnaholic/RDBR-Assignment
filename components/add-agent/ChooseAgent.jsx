@@ -20,7 +20,7 @@ export default function ChooseAgent({
   setAgents,
 }) {
   useEffect(() => {
-    fetch("http://localhost:3000/api/get-agents")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/get-agents`)
       .then((res) => res.json())
       .then((data) => {
         setAgents(data.agents);

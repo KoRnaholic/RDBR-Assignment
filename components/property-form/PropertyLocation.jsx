@@ -51,7 +51,9 @@ export default function PropertyLocation({
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/get-cities");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}api/get-cities`
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

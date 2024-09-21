@@ -39,7 +39,7 @@ ${isValid ? "border-gray-400" : "border-red-400"}`}
         {previewImage ? (
           <div className="relative">
             <Image
-              src={""}
+              src={previewImage}
               alt="Uploaded Preview"
               className="object-cover w-24 h-20 rounded-md"
               width={100}
