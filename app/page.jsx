@@ -51,6 +51,27 @@ export default function Home() {
   const filteredByBedrooms = originalProperties?.filter(
     (property) => property.bedrooms === parseInt(bedrooms, 10)
   );
+  const filterByPrice = originalProperties?.filter((property) => {
+    const propertyPrice = parseInt(property.price, 10);
+    const min = parseInt(minPrice, 10);
+    const max = parseInt(maxPrice, 10);
+
+    return (
+      (min ? propertyPrice >= min : true) && (max ? propertyPrice <= max : true)
+    );
+  });
+
+  const filterByArea = originalProperties?.filter((property) => {
+    const propertyArea = parseInt(property.area, 10); // Assuming property has an 'area' field
+    const min = parseInt(minArea, 10);
+    const max = parseInt(maxArea, 10);
+
+    return (
+      (min ? propertyArea >= min : true) && (max ? propertyArea <= max : true)
+    );
+  });
+
+  console.log(filterByPrice);
 
   const handleClear = () => {
     setBedrooms("");
@@ -126,7 +147,9 @@ export default function Home() {
         setProperties={setProperties}
         originalProperties={originalProperties}
         filteredByRegion={filteredByRegion}
-        filteredByBedrooms={filteredByBedrooms} // Pass original properties
+        filteredByBedrooms={filteredByBedrooms}
+        filterByPrice={filterByPrice}
+        filterByArea={filterByArea} // Pass original properties
       />
       <div className="mt-3 text-black flex gap-2">
         {selectedRegions.map((region) => (

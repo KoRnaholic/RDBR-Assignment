@@ -11,6 +11,7 @@ export default function FilterRegion({
   properties,
   filteredByBedrooms,
   filteredByRegion,
+  filterByPrice,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -63,7 +64,11 @@ export default function FilterRegion({
     } else {
       // Filter properties by selected region names
 
-      const filteredProp = [...filteredByBedrooms, ...filteredByRegion];
+      const filteredProp = [
+        ...filteredByBedrooms,
+        ...filteredByRegion,
+        // ...filterByPrice,
+      ];
       setProperties(filteredProp); // Update the properties list with filtered data
     }
     setIsOpen(false); // Close the dropdown after submitting

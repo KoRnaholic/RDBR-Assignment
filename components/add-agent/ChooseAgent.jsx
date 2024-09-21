@@ -9,8 +9,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Dialog, DialogTrigger } from "../ui/dialog";
+import { useEffect } from "react";
+import { DialogTrigger } from "../ui/dialog";
 import AddAgentModal from "./AddAgentModal";
 
 export default function ChooseAgent({
@@ -30,26 +30,8 @@ export default function ChooseAgent({
   }, [setAgents]);
 
   return (
-    <div className="mt-10 w-full text-[#021526] font-semibold">
-      <label>აგენტი</label>
-
-      <label className="mt-2 block w-1/2  text-[#021526] font-semibold text-sm">
-        {/* აირჩიე * */}
-        {/* <select
-          className="mt-1 block w-full outline-none px-2 rounded-md border py-2"
-          // value={inputEmailValue}
-          // onChange={handleEmailChange} // Controlled input for email
-          name="email"
-        >
-          <option>აირჩიე</option>
-          <option> დაამატე აგენტი</option>
-          {/* {agents?.map((agent) => (
-            <option key={agent.id} value={`${agent.name} ${agent.surname}`}>
-              {agent.name} {agent.surname}
-            </option>
-          ))} */}
-        {/* </select>  */}
-      </label>
+    <div className="mt-14 w-full text-[#021526] font-semibold flex flex-col gap-3">
+      <label>აგენტი *</label>
 
       <Select value={selectedAgent} onValueChange={setSelectedAgent}>
         <SelectTrigger className="w-1/2">
@@ -57,18 +39,16 @@ export default function ChooseAgent({
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel className="flex gap-2 items-center hover:bg-slate-50 text-[#021526] border-b cursor-pointer">
-              <AddAgentModal>
-                <>
-                  <DialogTrigger asChild>
-                    <div className="flex gap-2 items-center">
-                      <Plus className="border rounded-full w-6 h-6 p-1" />{" "}
-                      დაამატე აგენტი
-                    </div>
-                  </DialogTrigger>
-                </>
-              </AddAgentModal>
-            </SelectLabel>
+            <AddAgentModal>
+              <DialogTrigger asChild>
+                <SelectLabel className="flex gap-2 items-center hover:bg-slate-50 text-[#021526] border-b cursor-pointer">
+                  <div className="flex gap-2 items-center">
+                    <Plus className="border rounded-full w-6 h-6 p-1" /> დაამატე
+                    აგენტი
+                  </div>
+                </SelectLabel>
+              </DialogTrigger>
+            </AddAgentModal>
             {agents?.map((agent) => (
               <SelectItem
                 className="border-b cursor-pointer"

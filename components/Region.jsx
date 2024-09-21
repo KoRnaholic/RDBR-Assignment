@@ -14,6 +14,8 @@ export default function Region({
   filterState,
   filteredByRegion,
   filteredByBedrooms,
+  filterByPrice,
+  filterByArea,
 }) {
   const [regions, setRegions] = useState(null);
 
@@ -36,11 +38,22 @@ export default function Region({
           regions={regions}
           filteredByBedrooms={filteredByBedrooms}
           filteredByRegion={filteredByRegion}
+          filterByPrice={filterByPrice}
         />
 
-        <FilterByPrice filterState={filterState} />
+        <FilterByPrice
+          filterByPrice={filterByPrice}
+          filterState={filterState}
+          filteredByBedrooms={filteredByBedrooms}
+          filteredByRegion={filteredByRegion}
+          setProperties={setProperties}
+        />
 
-        <FilterByArea filterState={filterState} />
+        <FilterByArea
+          setProperties={setProperties}
+          filterByArea={filterByArea}
+          filterState={filterState}
+        />
         <FilterByBed
           originalProperties={originalProperties}
           properties={properties}
@@ -48,6 +61,7 @@ export default function Region({
           filterState={filterState}
           filteredByRegion={filteredByRegion}
           filteredByBedrooms={filteredByBedrooms}
+          filterByPrice={filterByPrice}
         />
       </div>
     </>

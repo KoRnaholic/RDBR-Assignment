@@ -6,6 +6,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import PropertyCard from "./PropertyCard";
+
+export const revalidate = 0;
 export default async function PropertyCarousel({ property }) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-properties`
@@ -16,6 +18,9 @@ export default async function PropertyCarousel({ property }) {
     (item) => item.city.region.name === property.city.region.name
   );
 
+  const filteredWithoutCurrentProperty = filteredData.filter(
+    (item) => item.id !== property.id // Assuming each property has a unique 'id'
+  );
   return (
     <section className="mt-14">
       <h2 className="text-[#021526] text-3xl font-semibold ">
@@ -28,9 +33,10 @@ export default async function PropertyCarousel({ property }) {
           loop: true,
         }}
         className="mt-12 w-full max-w-[1700px] mx-auto"
+        propertyLength={filteredWithoutCurrentProperty.length}
       >
         <CarouselContent className="">
-          {filteredData.map((filterdProperty, index) => (
+          {filteredWithoutCurrentProperty.map((filterdProperty, index) => (
             <CarouselItem
               key={index}
               className="pl-5 md:basis-1/3 lg:basis-1/4"
@@ -39,8 +45,10 @@ export default async function PropertyCarousel({ property }) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious
+          propertyLength={filteredWithoutCurrentProperty.length}
+        />
+        <CarouselNext propertyLength={filteredWithoutCurrentProperty.length} />
       </Carousel>
     </section>
   );

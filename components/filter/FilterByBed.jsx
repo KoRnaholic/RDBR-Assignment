@@ -10,6 +10,7 @@ export default function FilterByBed({
   properties,
   filteredByRegion,
   filteredByBedrooms,
+  filterByPrice,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -39,7 +40,11 @@ export default function FilterByBed({
     } else {
       console.log(filteredByRegion, filteredByBedrooms);
 
-      const filteredProp2 = [...filteredByRegion, ...filteredByBedrooms];
+      const filteredProp2 = [
+        ...filteredByRegion,
+        ...filteredByBedrooms,
+        // ...filterByPrice,
+      ];
 
       setProperties(filteredProp2);
     }

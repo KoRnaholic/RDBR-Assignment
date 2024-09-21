@@ -9,28 +9,40 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AddProperty() {
-  const [inputAdressValue, setInputAdressValue] = useState("");
-  const [inputIndexValue, setInputIndexValue] = useState("");
-  const [inputRegionValue, setInputRegionValue] = useState("");
-  const [inputCityValue, setInputCityValue] = useState("");
-  const [selectedAgent, setSelectedAgent] = useState("");
+  const [inputAdressValue, setInputAdressValue] = useState(
+    sessionStorage.getItem("inputAdressValue") || ""
+  );
+  const [inputIndexValue, setInputIndexValue] = useState(
+    sessionStorage.getItem("inputIndexValue") || ""
+  );
+  const [inputRegionValue, setInputRegionValue] = useState(
+    sessionStorage.getItem("inputRegionValue") || ""
+  );
+  const [inputCityValue, setInputCityValue] = useState(
+    sessionStorage.getItem("inputCityValue") || ""
+  );
+  const [selectedAgent, setSelectedAgent] = useState(
+    sessionStorage.getItem("selectedAgent") || ""
+  );
 
   const [formValues, setFormValues] = useState({
-    price: "",
-    bedrooms: "",
-    area: "",
-    description: "",
+    price: sessionStorage.getItem("price") || "",
+    bedrooms: sessionStorage.getItem("bedrooms") || "",
+    area: sessionStorage.getItem("area") || "",
+    description: sessionStorage.getItem("description") || "",
   });
 
   const router = useRouter();
-
-  const [saleOrRent, setSaleOrRent] = useState(null);
+  const [saleOrRent, setSaleOrRent] = useState(
+    sessionStorage.getItem("saleOrRent") || null
+  );
 
   const [selectedImage, setSelectedImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(
+    sessionStorage.getItem("selectedImage") || null
+  );
 
   const [agents, setAgents] = useState(null);
-
   const disabled = selectedImage === null ? false : true;
   const [regions, setRegions] = useState(null);
   const [cities, setCities] = useState(null);
@@ -44,16 +56,7 @@ export default function AddProperty() {
   );
   const agentId = filteredAgent?.id;
 
-  console.log(
-    agents,
-    agentId,
-    inputAdressValue,
-    inputIndexValue,
-    inputRegionValue,
-    selectedImage,
-    formValues.price
-  );
-
+  // Convert image to base64 and save to session storage
   const convertImageToBase64 = (file) => {
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -78,18 +81,38 @@ export default function AddProperty() {
     sessionStorage.removeItem("selectedImage");
   };
 
+  // Save form data to sessionStorage on changes
+  useEffect(() => {
+    sessionStorage.setItem("inputAdressValue", inputAdressValue);
+    sessionStorage.setItem("inputIndexValue", inputIndexValue);
+    sessionStorage.setItem("inputRegionValue", inputRegionValue);
+    sessionStorage.setItem("inputCityValue", inputCityValue);
+    sessionStorage.setItem("selectedAgent", selectedAgent);
+    sessionStorage.setItem("price", formValues.price);
+    sessionStorage.setItem("bedrooms", formValues.bedrooms);
+    sessionStorage.setItem("area", formValues.area);
+    sessionStorage.setItem("description", formValues.description);
+    sessionStorage.setItem("saleOrRent", saleOrRent);
+  }, [
+    inputAdressValue,
+    inputIndexValue,
+    inputRegionValue,
+    inputCityValue,
+    selectedAgent,
+    formValues,
+    saleOrRent,
+  ]);
+
   useEffect(() => {
     fetch("https://api.real-estate-manager.redberryinternship.ge/api/regions")
       .then((res) => res.json())
       .then((data) => {
         setRegions(data);
-        // setLoading(false)
       });
     fetch("https://api.real-estate-manager.redberryinternship.ge/api/cities")
       .then((res) => res.json())
       .then((data) => {
         setCities(data);
-        // setLoading(false)
       });
   }, []);
 
@@ -111,7 +134,7 @@ export default function AddProperty() {
     formData.append("agent_id", agentId);
     formData.append("bedrooms", formValues.bedrooms);
     formData.append("is_rental", saleOrRent);
-    formData.append("image", selectedImage); // Add the selected image file
+    formData.append("image", selectedImage);
     formData.append("description", formValues.description);
 
     try {
@@ -120,8 +143,7 @@ export default function AddProperty() {
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`, // Bearer token for authorization
-            // 'Content-Type': 'multipart/form-data' - Don't set this manually, let the browser handle it
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
             Accept: "application/json",
           },
           body: formData,
@@ -132,12 +154,31 @@ export default function AddProperty() {
         const data = await response.json();
         console.log("Success:", data);
         router.push("/");
+        handleClear();
       } else {
         console.error("Error:", response.statusText);
       }
     } catch (error) {
       console.error("Request failed:", error);
     }
+  };
+
+  const handleClear = () => {
+    setInputAdressValue("");
+    setInputIndexValue("");
+    setInputRegionValue("");
+    setInputCityValue("");
+    setSelectedAgent("");
+    setFormValues({
+      price: "",
+      bedrooms: "",
+      area: "",
+      description: "",
+    });
+    setSaleOrRent(null);
+    setPreviewImage(null);
+    setCities(null);
+    sessionStorage.clear(); // Clear sessionStorage when clearing the form
   };
 
   return (
@@ -147,7 +188,7 @@ export default function AddProperty() {
       </h2>
       <form
         onSubmit={handleSubmit}
-        className="mt-10  gap-10 max-w-[788px] mx-auto"
+        className="mt-10 gap-10 max-w-[788px] mx-auto"
       >
         <DealType saleOrRent={saleOrRent} setSaleOrRent={setSaleOrRent} />
         <PropertyLocation
@@ -170,6 +211,7 @@ export default function AddProperty() {
           handleRemoveImage={handleRemoveImage}
           handleFileChange={handleFileChange}
           disabled={disabled}
+          selectedImage={selectedImage}
         />
         <ChooseAgent
           selectedAgent={selectedAgent}
@@ -177,7 +219,7 @@ export default function AddProperty() {
           agents={agents}
           setAgents={setAgents}
         />
-        <PropertyButtons />
+        <PropertyButtons handleClear={handleClear} />
       </form>
     </section>
   );

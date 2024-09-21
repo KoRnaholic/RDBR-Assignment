@@ -9,7 +9,7 @@ import zip from "../../../public/icons/zip.svg";
 import PropertyDeleteModal from "@/components/property/PropertyDeleteModal";
 import PropertyCarousel from "@/components/property/PropertyCarousel";
 import { formatDate } from "@/lib/utils";
-
+export const revalidate = 0;
 export default async function PropertyPage({ params }) {
   const res = await fetch(
     `https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${params.id}`,
@@ -62,7 +62,9 @@ export default async function PropertyPage({ params }) {
         </div>
 
         <div className="py-8">
-          <h2 className="text-5xl text-[#021526] font-semibold">{price} ლ</h2>
+          <h2 className="text-5xl text-[#021526] font-semibold font-sans">
+            {price.toLocaleString()} ლ
+          </h2>
 
           <div className="flex flex-col gap-3 mt-6 text-[#808A93]">
             <div className="flex gap-1 mt-1 text-[#808A93]">
@@ -97,8 +99,8 @@ export default async function PropertyPage({ params }) {
                   className="rounded-full h-[72px]"
                 />
                 <div>
-                  <p className="text-[#021526]">
-                    {property.agent.name}
+                  <p className="text-[#021526] flex gap-1">
+                    <span>{property.agent.name}</span>
                     {property.agent.surname}
                   </p>
                   <p>აგენტი</p>

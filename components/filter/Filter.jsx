@@ -14,6 +14,8 @@ export default function Filter({
   filterState,
   filteredByRegion,
   filteredByBedrooms,
+  filterByPrice,
+  filterByArea,
 }) {
   return (
     <div className=" flex justify-between items-center">
@@ -25,6 +27,8 @@ export default function Filter({
           setProperties={setProperties}
           filteredByRegion={filteredByRegion}
           filteredByBedrooms={filteredByBedrooms}
+          filterByPrice={filterByPrice}
+          filterByArea={filterByArea}
         />
       </div>
 

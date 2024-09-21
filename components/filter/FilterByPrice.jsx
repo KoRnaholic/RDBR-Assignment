@@ -3,9 +3,16 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "../ui/button";
 import { useEffect, useRef, useState } from "react";
 
-const prices = [50000, 100000, 150000, 200000, 300000];
+const prices = [50000, 100000, 150000, 200000];
+const prices2 = [100000, 150000, 200000, 300000];
 
-export default function FilterByPrice({ filterState }) {
+export default function FilterByPrice({
+  filteredByBedrooms,
+  filteredByRegion,
+  filterByPrice,
+  filterState,
+  setProperties,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const priceRef = useRef(null);
@@ -46,6 +53,12 @@ export default function FilterByPrice({ filterState }) {
       filterState.priceState.minPrice,
       filterState.priceState.maxPrice
     );
+    const filteredProp = [
+      ...filteredByBedrooms,
+      ...filteredByRegion,
+      ...filterByPrice,
+    ];
+    setProperties(filteredProp);
     setIsOpen(false);
     // You can now use these values for filtering
   };
@@ -100,7 +113,7 @@ export default function FilterByPrice({ filterState }) {
 
               <ul className="mt-5 space-y-1">
                 <label className="font-semibold">მაქს. ფასი</label>
-                {prices.map((price) => (
+                {prices2.map((price) => (
                   <li key={price}>{price.toLocaleString()} ლ</li>
                 ))}
               </ul>

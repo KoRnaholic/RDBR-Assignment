@@ -27,6 +27,7 @@ const Carousel = React.forwardRef(
       plugins,
       className,
       children,
+      propertyLength,
       ...props
     },
     ref
@@ -162,7 +163,10 @@ const CarouselItem = React.forwardRef(({ className, ...props }, ref) => {
 CarouselItem.displayName = "CarouselItem";
 
 const CarouselPrevious = React.forwardRef(
-  ({ className, variant = "", size = "icon", ...props }, ref) => {
+  (
+    { className, propertyLength, variant = "", size = "icon", ...props },
+    ref
+  ) => {
     const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
     return (
@@ -181,7 +185,7 @@ const CarouselPrevious = React.forwardRef(
         onClick={scrollPrev}
         {...props}
       >
-        <ArrowLeft className="h-[30px] w-[30px]" />
+        {propertyLength > 3 && <ArrowLeft className="h-[30px] w-[30px]" />}
         <span className="sr-only">Previous slide</span>
       </Button>
     );
@@ -190,7 +194,10 @@ const CarouselPrevious = React.forwardRef(
 CarouselPrevious.displayName = "CarouselPrevious";
 
 const CarouselNext = React.forwardRef(
-  ({ className, variant = "", size = "icon", ...props }, ref) => {
+  (
+    { className, propertyLength, variant = "", size = "icon", ...props },
+    ref
+  ) => {
     const { orientation, scrollNext, canScrollNext } = useCarousel();
 
     return (
@@ -209,7 +216,7 @@ const CarouselNext = React.forwardRef(
         onClick={scrollNext}
         {...props}
       >
-        <ArrowRight className="h-[30px] w-[30px]" />
+        {propertyLength > 3 && <ArrowRight className="h-[30px] w-[30px]" />}
         <span className="sr-only">Next slide</span>
       </Button>
     );

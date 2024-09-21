@@ -5,7 +5,11 @@ import { useEffect, useRef, useState } from "react";
 
 const area = [50000, 100000, 150000, 200000, 250000];
 
-export default function FilterByArea({ filterState }) {
+export default function FilterByArea({
+  setProperties,
+  filterState,
+  filterByArea,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const priceRef = useRef(null);
@@ -42,12 +46,14 @@ export default function FilterByArea({ filterState }) {
 
   const handleSubmit = () => {
     console.log(
-      "Selected area range:",
-      filterState.areaState.minArea,
-      filterState.areaState.maxArea
+      "Selected price range:",
+      filterState.priceState.minPrice,
+      filterState.priceState.maxPrice
     );
-    // You can use these values for filtering or further logic
+    const filteredProp = [...filterByArea];
+    setProperties(filteredProp);
     setIsOpen(false);
+    // You can now use these values for filtering
   };
 
   return (
@@ -55,7 +61,7 @@ export default function FilterByArea({ filterState }) {
       <div
         onClick={toggleDropdown}
         ref={priceRef}
-        className="inline-flex cursor-pointer px-3 py-2 rounded-lg font-semibold hover:bg-[#F3F3F3] text-black"
+        className="inline-flex cursor-pointer items-center px-3 py-2 rounded-lg font-semibold hover:bg-[#F3F3F3] text-black"
       >
         ფართობი
         <ChevronDown

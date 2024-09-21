@@ -26,7 +26,9 @@ export default function PropertyCard({ property }) {
         </div>
 
         <div className="text-[#021526B2] p-5 border-b rounded-b-lg">
-          <h2 className="text-[#021526] text-2xl font-semibold">{price} ლ</h2>
+          <h2 className="text-[#021526] text-2xl font-semibold">
+            {price.toLocaleString()} ლ
+          </h2>
           <div className="flex gap-2 mt-1">
             <Image src={pin} alt="pin" />
             {address}

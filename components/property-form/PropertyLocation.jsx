@@ -15,6 +15,32 @@ export default function PropertyLocation({
 }) {
   const [cities, setCities] = useState(null);
 
+  const [inputStarted, setInputStarted] = useState({
+    address: false,
+    index: false,
+  });
+
+  const isAddressValid = inputAdressValue.length >= 2;
+  const isIndexValid = !isNaN(inputIndexValue) && inputIndexValue.trim() !== "";
+
+  const handleAddressInputChange = (e) => {
+    const { name, value } = e.target;
+    handleAdressChange(e); // Call the passed handler
+    // Mark the field as started typing (only once)
+    if (!inputStarted[name]) {
+      setInputStarted({ ...inputStarted, [name]: true });
+    }
+  };
+
+  const handleIndexInputChange = (e) => {
+    const { name, value } = e.target;
+    handleIndexChange(e);
+    // Mark the field as started typing (only once)
+    if (!inputStarted[name]) {
+      setInputStarted((prev) => ({ ...prev, [name]: true }));
+    }
+  };
+
   const filteredRegion = data?.find(
     (region) => region.name === inputRegionValue
   );
@@ -49,15 +75,25 @@ export default function PropertyLocation({
             მისამართი *
             <input
               type="text"
-              className="mt-1 block w-full border px-2 outline-none rounded-md shadow-sm py-2"
+              className={`mt-1 block w-full border px-2 outline-none rounded-md shadow-sm py-2 ${
+                inputStarted.address
+                  ? isAddressValid
+                    ? "border-[#45A849]"
+                    : "border-red-500"
+                  : ""
+              }`}
               value={inputAdressValue}
-              onChange={handleAdressChange} // Controlled input for name
+              onChange={handleAddressInputChange}
               name="address"
               required
             />
             <span
               className={`flex items-center gap-1 mt-1 font-medium ${
-                inputAdressValue.length >= 2 ? "text-[#45A849]" : "text-black"
+                inputStarted.address
+                  ? isAddressValid
+                    ? "text-[#45A849]"
+                    : "text-red-500"
+                  : ""
               }`}
             >
               <Check className="w-4 h-4" /> მინიმუმ ორი სიმბოლო
@@ -75,13 +111,13 @@ export default function PropertyLocation({
               name="region"
               required
             >
+              <option value="" disabled>
+                აირჩიე რეგიონი
+              </option>
               {data?.map((region) => (
                 <option key={region.id}>{region.name}</option>
               ))}
             </select>
-            {/* <span className="flex items-center gap-1 mt-1 font-medium">
-              <Check className="w-4 h-4" /> გამოიყენეთ @redberry.ge ფოსტა
-            </span> */}
           </label>
         </div>
 
@@ -92,14 +128,28 @@ export default function PropertyLocation({
             საფოსტო ინდექსი
             <input
               type="text"
-              className="mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2"
+              className={`mt-1 block w-full outline-none px-2 rounded-md border shadow-sm py-2 ${
+                inputStarted.index
+                  ? isIndexValid
+                    ? "border-[#45A849]"
+                    : "border-red-500"
+                  : ""
+              }`}
               value={inputIndexValue}
-              onChange={handleIndexChange} // Controlled input for surname
+              onChange={handleIndexInputChange} // Controlled input for surname
               name="index"
               required
             />
-            <span className="flex items-center gap-1 mt-1 font-medium">
-              <Check className="w-4 h-4" /> მინიმუმ ორი სიმბოლო
+            <span
+              className={`flex items-center gap-1 mt-1 font-medium ${
+                inputStarted.index
+                  ? isIndexValid
+                    ? "text-[#45A849]"
+                    : "text-red-500"
+                  : ""
+              }`}
+            >
+              <Check className="w-4 h-4" /> მხოლოდ რიცხვები
             </span>
           </label>
 
@@ -114,7 +164,9 @@ export default function PropertyLocation({
                 name="city"
                 required
               >
-                {" "}
+                <option value="" disabled>
+                  აირჩიე ქალაქი
+                </option>
                 {filteredCities?.map((city) => (
                   <option key={city.id}>{city.name}</option>
                 ))}
