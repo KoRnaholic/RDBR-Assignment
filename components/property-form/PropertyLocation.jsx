@@ -53,6 +53,7 @@ export default function PropertyLocation({
               value={inputAdressValue}
               onChange={handleAdressChange} // Controlled input for name
               name="address"
+              required
             />
             <span
               className={`flex items-center gap-1 mt-1 font-medium ${
@@ -72,6 +73,7 @@ export default function PropertyLocation({
               value={inputRegionValue}
               onChange={handleRegionChange} // Controlled input for email
               name="region"
+              required
             >
               {data?.map((region) => (
                 <option key={region.id}>{region.name}</option>
@@ -94,6 +96,7 @@ export default function PropertyLocation({
               value={inputIndexValue}
               onChange={handleIndexChange} // Controlled input for surname
               name="index"
+              required
             />
             <span className="flex items-center gap-1 mt-1 font-medium">
               <Check className="w-4 h-4" /> მინიმუმ ორი სიმბოლო
@@ -109,6 +112,7 @@ export default function PropertyLocation({
                 value={inputCityValue}
                 onChange={handleCityChange} // Controlled input for phone
                 name="city"
+                required
               >
                 {" "}
                 {filteredCities?.map((city) => (

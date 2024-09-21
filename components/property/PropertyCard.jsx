@@ -21,7 +21,7 @@ export default function PropertyCard({ property }) {
             alt="hotel"
           />
           <span className="absolute top-6 left-6 text-white px-[18px] py-1.5 bg-[#39626f] rounded-2xl text-sm">
-            იყიდება
+            {is_rental ? "ქირავდება" : "იყიდება"}
           </span>
         </div>
 

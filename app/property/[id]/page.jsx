@@ -53,7 +53,7 @@ export default async function PropertyPage({ params }) {
               priority
             />
             <span className="absolute top-10 left-10 text-white px-6 py-2 bg-[#39626f] rounded-3xl text-xl leading-6">
-              იყიდება
+              {is_rental ? "ქირავდება" : "იყიდება"}
             </span>
             <p className="text-end">
               გამოქვეყნების თარიღი {formatDate(created_at)}

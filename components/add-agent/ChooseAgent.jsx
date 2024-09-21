@@ -10,10 +10,15 @@ import {
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Dialog, DialogTrigger } from "../ui/dialog";
+import AddAgentModal from "./AddAgentModal";
 
-export default function ChooseAgent({ agents, setAgents }) {
-  const [selectedAgent, setSelectedAgent] = useState("");
-
+export default function ChooseAgent({
+  selectedAgent,
+  setSelectedAgent,
+  agents,
+  setAgents,
+}) {
   console.log(selectedAgent);
 
   useEffect(() => {
@@ -23,10 +28,6 @@ export default function ChooseAgent({ agents, setAgents }) {
         setAgents(data.agents);
       });
   }, [setAgents]);
-
-  const handleAgentChange = (event) => {
-    setSelectedAgent(event.target.value);
-  };
 
   return (
     <div className="mt-10 w-full text-[#021526] font-semibold">
@@ -50,22 +51,30 @@ export default function ChooseAgent({ agents, setAgents }) {
         {/* </select>  */}
       </label>
 
-      <Select value={selectedAgent} onChange={handleAgentChange}>
+      <Select value={selectedAgent} onValueChange={setSelectedAgent}>
         <SelectTrigger className="w-1/2">
           <SelectValue placeholder="აირჩიე" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             <SelectLabel className="flex gap-2 items-center hover:bg-slate-50 text-[#021526] border-b cursor-pointer">
-              <Plus className="border rounded-full w-6 h-6 p-1" /> დაამატე
-              აგენტი
+              <AddAgentModal>
+                <>
+                  <DialogTrigger asChild>
+                    <div className="flex gap-2 items-center">
+                      <Plus className="border rounded-full w-6 h-6 p-1" />{" "}
+                      დაამატე აგენტი
+                    </div>
+                  </DialogTrigger>
+                </>
+              </AddAgentModal>
             </SelectLabel>
             {agents?.map((agent) => (
               <SelectItem
                 className="border-b cursor-pointer"
                 value={`${agent.name}${agent.surname}`}
-                on
                 key={agent.id}
+                onClick={() => setSelectedAgent(agent.id)}
               >
                 {agent.name} {agent.surname}
               </SelectItem>

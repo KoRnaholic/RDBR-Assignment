@@ -5,6 +5,7 @@ import Region from "../Region";
 import AddButton from "../add-agent/AddAgentModal";
 import Link from "next/link";
 import AddAgentModal from "../add-agent/AddAgentModal";
+import { DialogTrigger } from "../ui/dialog";
 
 export default function Filter({
   properties,
@@ -36,7 +37,15 @@ export default function Filter({
         </Link>
 
         {/* adding agent */}
-        <AddAgentModal />
+        {/* <AddAgentModal /> */}
+        <AddAgentModal>
+          <DialogTrigger asChild>
+            <Button variant="secondary" className="flex  group">
+              <PlusIcon className="h-4 w-4 text-[#F93B1D] mr-1 group-hover:text-[#FFFFFF]" />
+              აგენტის დამატება
+            </Button>
+          </DialogTrigger>
+        </AddAgentModal>
       </div>
     </div>
   );

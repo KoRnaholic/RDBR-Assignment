@@ -1,14 +1,7 @@
 import { Check } from "lucide-react";
 import { useState } from "react";
 
-export default function PropertyDetails() {
-  const [formValues, setFormValues] = useState({
-    price: "",
-    bedrooms: "",
-    area: "",
-    description: "",
-  });
-
+export default function PropertyDetails({ formValues, setFormValues }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({ ...prevValues, [name]: value }));

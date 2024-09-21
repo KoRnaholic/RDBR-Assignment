@@ -15,7 +15,7 @@ import ImageUploadInput from "./ImageUploadInput";
 import AgentFormInputs from "./AgentFormInputs";
 import { useRouter } from "next/navigation";
 
-export default function AddAgentModal() {
+export default function AddAgentModal({ children }) {
   const [formValues, setFormValues] = useState({
     name: "",
     surname: "",
@@ -116,12 +116,13 @@ export default function AddAgentModal() {
   return (
     <>
       <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="secondary" className="flex  group">
+        {/* <DialogTrigger asChild> */}
+        {/* <Button variant="secondary" className="flex  group">
             <PlusIcon className="h-4 w-4 text-[#F93B1D] mr-1 group-hover:text-[#FFFFFF]" />
             აგენტის დამატება
-          </Button>
-        </DialogTrigger>
+          </Button> */}
+        {children}
+        {/* </DialogTrigger> */}
         <DialogContent className="bg-white p-20">
           <DialogHeader>
             <DialogTitle className="mx-auto text-[#021526] text-3xl">

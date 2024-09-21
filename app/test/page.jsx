@@ -31,7 +31,7 @@ export default function Page() {
         {
           method: "POST",
           headers: {
-            Authorization: "Bearer 9d019cbd-6222-45db-a495-e2ed40e40eea", // Bearer token for authorization
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`, // Bearer token for authorization
             // 'Content-Type': 'multipart/form-data' - Don't set this manually, let the browser handle it
             Accept: "application/json",
           },
