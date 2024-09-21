@@ -12,7 +12,6 @@ export default function PropertyDetails({ formValues, setFormValues }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
-    // Mark the field as started typing (only once)
     if (!inputStarted[name]) {
       setInputStarted((prev) => ({ ...prev, [name]: true }));
     }

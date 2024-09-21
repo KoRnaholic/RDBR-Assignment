@@ -6,12 +6,9 @@ import { useEffect, useRef, useState } from "react";
 export default function FilterRegion({
   regions,
   setProperties,
-  originalProperties,
   filterState,
-  properties,
   filteredByBedrooms,
   filteredByRegion,
-  filterByPrice,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -38,17 +35,14 @@ export default function FilterRegion({
     setIsOpen(!isOpen);
   };
 
-  // Handle checkbox changes
   const handleCheckboxChange = (regionName) => {
     if (filterState.regionsState.selectedRegions.includes(regionName)) {
-      // Remove the region if it's already selected (i.e., checkbox is unchecked)
       filterState.regionsState.setSelectedRegions(
         filterState.regionsState.selectedRegions.filter(
           (name) => name !== regionName
         )
       );
     } else {
-      // Add the region if it's not selected (i.e., checkbox is checked)
       filterState.regionsState.setSelectedRegions([
         ...filterState.regionsState.selectedRegions,
         regionName,
@@ -59,19 +53,11 @@ export default function FilterRegion({
   // Filter properties based on selected regions
   const handleSubmit = () => {
     if (filterState.regionsState.selectedRegions.length === 0) {
-      // If no regions are selected, reset to original properties
-      // setProperties(originalProperties);
     } else {
-      // Filter properties by selected region names
-
-      const filteredProp = [
-        ...filteredByBedrooms,
-        ...filteredByRegion,
-        // ...filterByPrice,
-      ];
-      setProperties(filteredProp); // Update the properties list with filtered data
+      const filteredProp = [...filteredByBedrooms, ...filteredByRegion];
+      setProperties(filteredProp);
     }
-    setIsOpen(false); // Close the dropdown after submitting
+    setIsOpen(false);
   };
 
   return (

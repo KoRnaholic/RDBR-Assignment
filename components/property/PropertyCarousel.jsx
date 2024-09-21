@@ -19,7 +19,7 @@ export default async function PropertyCarousel({ property }) {
   );
 
   const filteredWithoutCurrentProperty = filteredData.filter(
-    (item) => item.id !== property.id // Assuming each property has a unique 'id'
+    (item) => item.id !== property.id
   );
   return (
     <section className="mt-14">

@@ -1,7 +1,5 @@
 "use client";
 import FilterRegion from "./filter/FilterRegion";
-
-import FilterBy from "./filter/FilterByPrice";
 import FilterByBed from "./filter/FilterByBed";
 import { useEffect, useState } from "react";
 import FilterByPrice from "./filter/FilterByPrice";
@@ -24,7 +22,6 @@ export default function Region({
       .then((res) => res.json())
       .then((data) => {
         setRegions(data.regions);
-        // setLoading(false)
       });
   }, []);
   return (

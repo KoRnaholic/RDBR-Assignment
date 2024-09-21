@@ -60,7 +60,6 @@ export default function FilterByPrice({
     ];
     setProperties(filteredProp);
     setIsOpen(false);
-    // You can now use these values for filtering
   };
 
   return (

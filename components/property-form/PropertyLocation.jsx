@@ -25,8 +25,8 @@ export default function PropertyLocation({
 
   const handleAddressInputChange = (e) => {
     const { name, value } = e.target;
-    handleAdressChange(e); // Call the passed handler
-    // Mark the field as started typing (only once)
+    handleAdressChange(e);
+
     if (!inputStarted[name]) {
       setInputStarted({ ...inputStarted, [name]: true });
     }
@@ -35,7 +35,6 @@ export default function PropertyLocation({
   const handleIndexInputChange = (e) => {
     const { name, value } = e.target;
     handleIndexChange(e);
-    // Mark the field as started typing (only once)
     if (!inputStarted[name]) {
       setInputStarted((prev) => ({ ...prev, [name]: true }));
     }
@@ -100,14 +99,12 @@ export default function PropertyLocation({
             </span>
           </label>
 
-          {/* Email Input */}
-
           <label className="block mt-5 text-[#021526] font-semibold">
             რეგიონი *
             <select
               className="mt-1 block w-full outline-none px-2 rounded-md border py-2"
               value={inputRegionValue}
-              onChange={handleRegionChange} // Controlled input for email
+              onChange={handleRegionChange}
               name="region"
               required
             >
@@ -171,9 +168,6 @@ export default function PropertyLocation({
                   <option key={city.id}>{city.name}</option>
                 ))}
               </select>
-              {/* <span className="flex items-center gap-1 mt-1 font-medium">
-                <Check className="w-4 h-4" /> მხოლოდ რიცხვები
-              </span> */}
             </label>
           )}
         </div>

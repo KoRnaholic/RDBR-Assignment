@@ -5,12 +5,9 @@ import { Button } from "../ui/button";
 
 export default function FilterByBed({
   filterState,
-  originalProperties,
   setProperties,
-  properties,
   filteredByRegion,
   filteredByBedrooms,
-  filterByPrice,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -35,20 +32,14 @@ export default function FilterByBed({
       !filterState.bedroomsState.bedrooms ||
       isNaN(filterState.bedroomsState.bedrooms)
     ) {
-      // If no valid bedroom number is input, reset to original properties
-      // setProperties(originalProperties);
     } else {
       console.log(filteredByRegion, filteredByBedrooms);
 
-      const filteredProp2 = [
-        ...filteredByRegion,
-        ...filteredByBedrooms,
-        // ...filterByPrice,
-      ];
+      const filteredProp2 = [...filteredByRegion, ...filteredByBedrooms];
 
       setProperties(filteredProp2);
     }
-    setIsOpen(false); // Close the dropdown after applying the filter
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -59,8 +50,6 @@ export default function FilterByBed({
   }, []);
 
   const toggleDropdown = (e) => {
-    // e.stopPropagation();
-
     setIsOpen(!isOpen);
   };
   return (

@@ -53,7 +53,6 @@ export default function FilterByArea({
     const filteredProp = [...filterByArea];
     setProperties(filteredProp);
     setIsOpen(false);
-    // You can now use these values for filtering
   };
 
   return (

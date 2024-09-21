@@ -10,14 +10,14 @@ export default function UploadImage() {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedImage(URL.createObjectURL(file)); // Generate a URL for the uploaded image
+      setSelectedImage(URL.createObjectURL(file));
     }
   };
 
   const handleRemoveImage = (e) => {
-    e.preventDefault(); // Prevent default behavior of label
-    e.stopPropagation(); // Stop event from bubbling up
-    setSelectedImage(null); // Reset the selectedImage state to null
+    e.preventDefault();
+    e.stopPropagation();
+    setSelectedImage(null);
   };
 
   const disabled = selectedImage === null ? false : true;
@@ -28,7 +28,7 @@ export default function UploadImage() {
         ატვირთეთ ფოტო *
       </label>
       <label
-        htmlFor="file-upload" // In React, use "htmlFor"
+        htmlFor="file-upload"
         className={`${
           disabled ? "cursor-default" : "cursor-pointer"
         } border-2 border-gray-400  border-dashed w-full rounded-md

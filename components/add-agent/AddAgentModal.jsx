@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "../ui/button";
-import { PlusIcon } from "lucide-react";
+
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
 import ImageUploadInput from "./ImageUploadInput";
@@ -23,7 +22,6 @@ export default function AddAgentModal({ children }) {
     phone: "",
   });
   const router = useRouter();
-  // Force refresh the page
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -85,7 +83,6 @@ export default function AddAgentModal({ children }) {
         }
       );
       if (res?.ok) {
-        // router.reload();
         router.push("/add-property");
         handleClearInputs();
       }
@@ -116,13 +113,7 @@ export default function AddAgentModal({ children }) {
   return (
     <>
       <Dialog>
-        {/* <DialogTrigger asChild> */}
-        {/* <Button variant="secondary" className="flex  group">
-            <PlusIcon className="h-4 w-4 text-[#F93B1D] mr-1 group-hover:text-[#FFFFFF]" />
-            აგენტის დამატება
-          </Button> */}
         {children}
-        {/* </DialogTrigger> */}
         <DialogContent className="bg-white p-20">
           <DialogHeader>
             <DialogTitle className="mx-auto text-[#021526] text-3xl">

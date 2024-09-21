@@ -2,7 +2,6 @@ import { Button } from "../ui/button";
 import { PlusIcon } from "lucide-react";
 
 import Region from "../Region";
-import AddButton from "../add-agent/AddAgentModal";
 import Link from "next/link";
 import AddAgentModal from "../add-agent/AddAgentModal";
 import { DialogTrigger } from "../ui/dialog";
@@ -40,8 +39,6 @@ export default function Filter({
           </Button>
         </Link>
 
-        {/* adding agent */}
-        {/* <AddAgentModal /> */}
         <AddAgentModal>
           <DialogTrigger asChild>
             <Button variant="secondary" className="flex  group">

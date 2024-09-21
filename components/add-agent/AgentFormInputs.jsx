@@ -2,11 +2,7 @@
 import { Check } from "lucide-react";
 import React, { useState } from "react";
 
-export default function AgentFormInputs({
-  // handleInputChange,
-  formValues,
-  setFormValues,
-}) {
+export default function AgentFormInputs({ formValues, setFormValues }) {
   const [inputStarted, setInputStarted] = useState({
     name: false,
     surname: false,
@@ -18,7 +14,6 @@ export default function AgentFormInputs({
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
     sessionStorage.setItem(name, value);
-    // Mark the field as started typing (only once)
     if (!inputStarted[name]) {
       setInputStarted({ ...inputStarted, [name]: true });
     }

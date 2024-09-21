@@ -11,6 +11,8 @@ export default function PropertyImageUpload({
 }) {
   const [inputTouched, setInputTouched] = useState(false);
 
+  console.log(previewImage);
+
   // Check if the selected image is valid
   const isValidImage = selectedImage?.size / (1024 * 1024) <= 1;
 

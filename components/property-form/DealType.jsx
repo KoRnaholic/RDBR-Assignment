@@ -9,7 +9,6 @@ export default function DealType({ saleOrRent, setSaleOrRent }) {
       <label className="text-[#1A1A1F]">გარიგების ტიპი</label>
 
       <div className="flex text-[#021526] gap-20">
-        {/* Custom styled radio input for 'იყიდება' */}
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="radio"
@@ -28,7 +27,6 @@ export default function DealType({ saleOrRent, setSaleOrRent }) {
           იყიდება
         </label>
 
-        {/* Custom styled radio input for 'ქირავდება' */}
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="radio"

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [properties, setProperties] = useState(null);
-  const [originalProperties, setOriginalProperties] = useState(null); // Keep original properties
+  const [originalProperties, setOriginalProperties] = useState(null);
   const [selectedRegions, setSelectedRegions] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -16,8 +16,6 @@ export default function Home() {
   const [maxPrice, setMaxPrice] = useState("");
   const [minArea, setMinArea] = useState("");
   const [maxArea, setMaxArea] = useState("");
-
-  console.log(selectedRegions);
 
   const showClear = bedrooms || minArea || minPrice;
 
@@ -71,8 +69,6 @@ export default function Home() {
     );
   });
 
-  console.log(filterByPrice);
-
   const handleClear = () => {
     setBedrooms("");
     setSelectedRegions([]);
@@ -90,10 +86,7 @@ export default function Home() {
 
   const deleteFilteredBedroom = () => {
     setBedrooms("");
-
-    // Reapply the region filter only
     let filteredProperties = originalProperties;
-
     if (selectedRegions.length > 0) {
       filteredProperties = filteredProperties.filter((property) =>
         selectedRegions.includes(property.city.region.name)
@@ -117,21 +110,19 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => {
         setProperties(data.properties);
-        setOriginalProperties(data.properties); // Store the original properties list
-        setLoading(false); // Data is loaded, stop showing spinner
+        setOriginalProperties(data.properties);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching properties:", error);
-        setLoading(false); // In case of error, stop showing spinner
+        setLoading(false);
       });
   }, []);
 
   useEffect(() => {
     if (selectedRegions.length === 0) {
-      // If no regions are selected, show all properties
       setProperties(originalProperties);
     } else {
-      // Filter the original properties based on the selected regions
       const filteredProperties = originalProperties?.filter((property) =>
         selectedRegions.includes(property.city.region.name)
       );
@@ -149,7 +140,7 @@ export default function Home() {
         filteredByRegion={filteredByRegion}
         filteredByBedrooms={filteredByBedrooms}
         filterByPrice={filterByPrice}
-        filterByArea={filterByArea} // Pass original properties
+        filterByArea={filterByArea}
       />
       <div className="mt-3 text-black flex gap-2">
         {selectedRegions.map((region) => (
